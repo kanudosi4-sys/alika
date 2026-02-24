@@ -171,7 +171,7 @@
         </div>
 
         <div class="card">
-            <h3 style="color: #0288d1; margin-top:0;">არმატურა და უკuგათვლა</h3>
+            <h3 style="color: #0288d1; margin-top:0;">არმატურა და უკუგათვლა</h3>
             <div class="calc-group">
                 <div><label>დასახელება</label><input type="text" id="rName" value="არმატურა"></div>
                 <div>
@@ -201,16 +201,16 @@
         </div>
 
         <div class="card">
-            <h3 style="color: #8e44ad; margin-top:0;">ბლოკის გაანგარიშება (ზომების მიხედვით) 🧱</h3>
+            <h3 style="color: #8e44ad; margin-top:0;">ბლოკის გაანგარიშება 🧱</h3>
             <div class="calc-group">
                 <div><label>კედლის ფართობი (მ²)</label><input type="number" id="wallSq" value="10"
                         oninput="calculateBlock()"></div>
                 <div>
                     <label>ბლოკის ტიპი</label>
-                    <select id="blockType" onchange="updateBlockPrice()">
-                        <option value="10" data-price="1.10" data-per-m3="125">10x40x20 (1.10₾)</option>
-                        <option value="20" data-price="1.50" data-per-m3="62.5" selected>20x40x20 (1.50₾)</option>
-                        <option value="30" data-price="2.40" data-per-m3="41.6">30x40x20 (2.40₾)</option>
+                    <select id="blockType" onchange="updateBlockSettings()">
+                        <option value="10" data-price="1.10">10x40x20 (1.10₾)</option>
+                        <option value="20" data-price="1.50" selected>20x40x20 (1.50₾)</option>
+                        <option value="30" data-price="2.40">30x40x20 (2.40₾)</option>
                     </select>
                 </div>
                 <div><label>ბლოკის ფასი (₾)</label><input type="number" id="blockPrice" value="1.50"
@@ -219,11 +219,11 @@
                         oninput="calculateBlock()"></div>
             </div>
             <div class="result-box block-res">
-                <p>🧱 რაოდენობა: <b><span id="res-blocks">125</span> ცალი</b> | 📐 მოცულობა: <b><span
-                            id="block-m3">2.00</span> მ³</b></p>
-                <p>🥣 დუღაბი: ცემენტი ~<b><span id="block-cem">56</span> კგ</b> | ქვიშა ~<b><span
-                            id="block-sand">0.15</span> მ³</b></p>
-                <h3 style="color: #c0392b; margin: 5px 0 0 0;">💰 ღირებულება: <span id="block-cost">188</span> ₾</h3>
+                <p>🧱 რაოდენობა: <b><span id="res-blocks">0</span> ცალი</b> | 📐 მოცულობა: <b><span
+                            id="block-m3">0.00</span> მ³</b></p>
+                <p>🥣 დუღაბი: ცემენტი ~<b><span id="block-cem">0</span> კგ</b> | ქვიშა ~<b><span
+                            id="block-sand">0.00</span> მ³</b></p>
+                <h3 style="color: #c0392b; margin: 5px 0 0 0;">💰 ღირებულება: <span id="block-cost">0</span> ₾</h3>
                 <button class="add-btn" style="background:#8e44ad;" onclick="addToTable('block')">სიაში დამატება
                     +</button>
             </div>
@@ -261,7 +261,7 @@
 
         let totalSum = 0;
 
-        function updateBlockPrice() {
+        function updateBlockSettings() {
             let select = document.getElementById('blockType');
             let price = select.options[select.selectedIndex].getAttribute('data-price');
             document.getElementById('blockPrice').value = price;
@@ -269,7 +269,6 @@
         }
 
         function calculateAll() {
-            // ბეტონი
             let l = parseFloat(document.getElementById('L').value) || 0, w = parseFloat(document.getElementById('W').value) || 0, h = parseFloat(document.getElementById('H').value) || 0;
             let vol = l * w * h;
             document.getElementById('sq-res').innerText = (l * w).toFixed(2);
@@ -278,7 +277,6 @@
             document.getElementById('agg-res').innerText = (vol * 1.2).toFixed(2);
             document.getElementById('price-res').innerText = Math.round(vol * 180);
 
-            // არმატურა
             let coeff = parseFloat(document.getElementById('dia').value), m = parseFloat(document.getElementById('rebarL').value) || 0, tp = parseFloat(document.getElementById('tonPrice').value) || 0;
             let kg = m * coeff;
             document.getElementById('res-m').innerText = m.toFixed(2);
@@ -301,20 +299,22 @@
             let wallSq = parseFloat(document.getElementById('wallSq').value) || 0;
             let minusSq = parseFloat(document.getElementById('minusSq').value) || 0;
             let netSq = Math.max(0, wallSq - minusSq);
-            let bWidth = parseInt(document.getElementById('blockType').value) / 100;
+
+            // ბლოკის სისქე მეტრებში
+            let thickness = parseInt(document.getElementById('blockType').value) / 100;
+
             let totalBlocks = Math.ceil(netSq * 12.5);
-            let totalM3 = netSq * bWidth;
+            let totalM3 = netSq * thickness;
             let bPrice = parseFloat(document.getElementById('blockPrice').value) || 0;
 
-            document.getElementById('net-sq').innerText = netSq.toFixed(2);
             document.getElementById('res-blocks').innerText = totalBlocks;
             document.getElementById('block-m3').innerText = totalM3.toFixed(2);
             document.getElementById('block-cost').innerText = Math.round(totalBlocks * bPrice);
 
-            // დუღაბის მიახლოებითი ხარჯი (ცემენტი 280კგ/მ3 ხსნარზე)
-            let mortarVol = totalM3 * 0.07; // საშუალოდ 7% დუღაბი მოცულობაში
-            document.getElementById('block-cem').innerText = Math.round(mortarVol * 400);
-            document.getElementById('block-sand').innerText = mortarVol.toFixed(2);
+            // დუღაბის ხარჯი (მოცულობის დაახლოებით 15-20%)
+            let mortarM3 = totalM3 * 0.18;
+            document.getElementById('block-cem').innerText = Math.round(mortarM3 * 300); // 300კგ ცემენტი 1მ3 ხსნარზე
+            document.getElementById('block-sand').innerText = mortarM3.toFixed(2);
         }
 
         function addToTable(type) {
@@ -330,7 +330,7 @@
                 info = document.getElementById('res-kg').innerText + " კგ არმატურა";
                 price = parseInt(document.getElementById('rebar-cost').innerText);
             } else if (type === 'block') {
-                name = "ბლოკის წყობა (" + document.getElementById('blockType').value + "სმ)";
+                name = "ბლოკი (" + document.getElementById('blockType').value + "სმ)";
                 info = document.getElementById('res-blocks').innerText + " ცალი / " + document.getElementById('block-m3').innerText + " მ³";
                 price = parseInt(document.getElementById('block-cost').innerText);
             }

@@ -66,53 +66,53 @@
         </button>
     </div>
 
-    <script>
-        // საათის ფუნქცია
-        function updateClock() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString();
-            document.getElementById('clock').innerText = timeString;
-        }
-        setInterval(updateClock, 1000); // განახლება ყოველ წამს
-        updateClock(); // პირველივე ჩატვირთვისას გამოჩენა
+    <script><script>
+            function calculateFull() {
+                // მონაცემების წაკითხვა
+                let l = parseFloat(document.getElementById('L').value) || 0;
+            let w = parseFloat(document.getElementById('W').value) || 0;
+            let h = parseFloat(document.getElementById('H').value) || 0;
 
-        // ფერის შეცვლის ფუნქცია
-        function changeColor() {
-            const colors = ['#f0f8ff', '#e6e6fa', '#ffe4e1', '#fafad2', '#d8bfd8', '#f5f5dc', '#e0ffff'];
-            const randomColor = colors[Math.floor(Math.random() * colors.length)];
-            document.body.style.backgroundColor = randomColor;
-        }
+            // 1. მოცულობის გამოთვლა (მ³)
+            let volume = l * w * h;
+
+            // 2. მასალების დათვლა შენი ფორმულით (370კგ ცემენტი 1მ³-ზე)
+            let cementBags = Math.ceil(volume * 7.4);
+            let aggregates = volume * 1.2;
+
+            // 3. ფასის დათვლა: ცემენტი (114₾) + ქვიშა/ხრეში (66₾) = 180₾
+            let totalPrice = volume * 180;
+
+            // შედეგების გამოტანა ეკრანზე
+            document.getElementById('vol-res').innerText = volume.toFixed(2);
+            document.getElementById('cem-res').innerText = cementBags;
+            document.getElementById('agg-res').innerText = aggregates.toFixed(2);
+            document.getElementById('price-res').innerText = totalPrice.toFixed(0);
+
+            // ბლოკის გამოჩენა
+            document.getElementById('detailed-result').style.display = 'block';
+    }
+    </script>
+
+    // საათის ფუნქცია
+    function updateClock() {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString();
+    document.getElementById('clock').innerText = timeString;
+    }
+    setInterval(updateClock, 1000); // განახლება ყოველ წამს
+    updateClock(); // პირველივე ჩატვირთვისას გამოჩენა
+
+    // ფერის შეცვლის ფუნქცია
+    function changeColor() {
+    const colors = ['#f0f8ff', '#e6e6fa', '#ffe4e1', '#fafad2', '#d8bfd8', '#f5f5dc', '#e0ffff'];
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    document.body.style.backgroundColor = randomColor;
+    }
     </script>
 
 </body>
 
 
 
-</html>function calculateFull() {
-// მონაცემების წაკითხვა
-let l = parseFloat(document.getElementById('L').value) || 0;
-let w = parseFloat(document.getElementById('W').value) || 0;
-let h = parseFloat(document.getElementById('H').value) || 0;
-
-// 1. მოცულობის გამოთვლა
-let volume = l * w * h;
-
-// 2. მასალების დათვლა შენი ფორმულით
-// 1მ3-ზე მიდის ~7.4 ტომარა (370კგ / 50კგ)
-let cementBags = Math.ceil(volume * 7.4);
-let aggregates = volume * 1.2;
-
-// 3. ფასის დათვლა შენი მონაცემებით:
-// ცემენტი (370კგ) = 114₾
-// ქვიშა/ხრეში (1.2მ3) = 66₾
-// ჯამში 1მ3 = 180₾
-let totalPrice = volume * 180;
-
-// შედეგების გამოტანა ეკრანზე
-document.getElementById('vol-res').innerText = volume.toFixed(2);
-document.getElementById('cem-res').innerText = cementBags;
-document.getElementById('agg-res').innerText = aggregates.toFixed(2);
-document.getElementById('price-res').innerText = totalPrice.toFixed(0);
-
-document.getElementById('detailed-result').style.display = 'block';
-}
+</html>

@@ -89,3 +89,33 @@
 
 
 </html>
+<div style="margin-top: 40px; padding: 20px; border-top: 2px solid #2c3e50; width: 80%; max-width: 400px;">
+    <h3>მოგვწერეთ:</h3>
+    <input type="text" id="userName" placeholder="თქვენი სახელი"
+        style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc;">
+    <textarea id="userMsg" placeholder="შეტყობინება"
+        style="width: 100%; padding: 10px; height: 80px; border-radius: 5px; border: 1px solid #ccc;"></textarea>
+    <button onclick="sendMessage()"
+        style="width: 100%; margin-top: 10px; padding: 10px; background-color: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer;">გაგზავნა
+        🚀</button>
+    <p id="responseMsg" style="color: #27ae60; font-weight: bold; margin-top: 10px;"></p>
+</div>
+
+<script>
+    // შეტყობინების გაგზავნის ფუნქცია
+    function sendMessage() {
+        const name = document.getElementById('userName').value;
+        const msg = document.getElementById('userMsg').value;
+        const response = document.getElementById('responseMsg');
+
+        if (name && msg) {
+            response.innerText = "მადლობა " + name + ", თქვენი შეტყობინება მიღებულია!";
+            // ველების გასუფთავება
+            document.getElementById('userName').value = "";
+            document.getElementById('userMsg').value = "";
+        } else {
+            response.style.color = "red";
+            response.innerText = "გთხოვთ, შეავსოთ ორივე ველი!";
+        }
+    }
+</script>

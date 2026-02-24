@@ -89,85 +89,59 @@
 
 
 </html>
-
-<body>
-    <div style="max-width: 800px; margin: auto; padding: 20px; font-family: 'Arial', sans-serif;">
-        <h1 style="color: #2c3e50; border-bottom: 3px solid #e67e22;">სამშენებლო პორტალი 🏗️</h1>
-
-        <div style="background: #fdf2e9; padding: 20px; border-radius: 10px; margin-top: 20px;">
-            <h3>ბეტონის ხარჯის კალკულატორი (მოცულობა)</h3>
-            <label>სიგრძე (მ):</label>
-            <input type="number" id="length" placeholder="0" style="width: 80px; margin: 5px;">
-            <label>სიგანე (მ):</label>
-            <input type="number" id="width" placeholder="0" style="width: 80px; margin: 5px;">
-            <label>სისქე (მ):</label>
-            <input type="number" id="height" placeholder="0" style="width: 80px; margin: 5px;">
-            <br><br>
-            <button onclick="calculate()"
-                style="background: #e67e22; color: white; padding: 10px 20px; border: none; cursor: pointer;">გამოთვლა</button>
-            <h4 id="result" style="color: #d35400;">საჭირო მოცულობა: 0 მ³</h4>
+<div class="card">
+    <h2>ბეტონის სრული კალკულატორი (B25 მარკა)</h2>
+    <div class="calc-group">
+        <div>
+            <label>სიგრძე (მ)</label><br>
+            <input type="number" id="L" value="1" step="0.1">
         </div>
-
-        <div style="margin-top: 30px;">
-            <h3>არქიტექტურა და კონსტრუქციები</h3>
-            <p style="font-style: italic; color: #7f8c8d;">აქ შეგიძლიათ განიხილოთ პროექტის დეტალები...</p>
-            <table border="1" style="width: 100%; border-collapse: collapse; text-align: left;">
-                <tr style="background: #2c3e50; color: white;">
-                    <th style="padding: 10px;">მასალა</th>
-                    <th style="padding: 10px;">ერთეული</th>
-                    <th style="padding: 10px;">ფასი (₾)</th>
-                </tr>
-                <tr>
-                    <td style="padding: 10px;">არმატება (A500C)</td>
-                    <td style="padding: 10px;">ტონა</td>
-                    <td style="padding: 10px;">2400</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px;">ბეტონი (B25)</td>
-                    <td style="padding: 10px;">მ³</td>
-                    <td style="padding: 10px;">210</td>
-                </tr>
-            </table>
+        <div>
+            <label>სიგანე (მ)</label><br>
+            <input type="number" id="W" value="1" step="0.1">
+        </div>
+        <div>
+            <label>სისქე (მ)</label><br>
+            <input type="number" id="H" value="0.2" step="0.01">
         </div>
     </div>
 
-    <script>
-        function calculate() {
-            const l = document.getElementById('length').value;
-            const w = document.getElementById('width').value;
-            const h = document.getElementById('height').value;
-            const res = l * w * h;
-            document.getElementById('result').innerText = "საჭირო მოცულობა: " + res.toFixed(2) + " მ³";
-        }
-    </script>
-</body>
-<div style="margin-top: 40px; padding: 20px; border-top: 2px solid #2c3e50; width: 80%; max-width: 400px;">
-    <h3>მოგვწერეთ:</h3>
-    <input type="text" id="userName" placeholder="თქვენი სახელი"
-        style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc;">
-    <textarea id="userMsg" placeholder="შეტყობინება"
-        style="width: 100%; padding: 10px; height: 80px; border-radius: 5px; border: 1px solid #ccc;"></textarea>
-    <button onclick="sendMessage()"
-        style="width: 100%; margin-top: 10px; padding: 10px; background-color: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer;">გაგზავნა
-        🚀</button>
-    <p id="responseMsg" style="color: #27ae60; font-weight: bold; margin-top: 10px;"></p>
+    <button onclick="calculateFull()">დეტალური გამოთვლა</button>
+
+    <div id="detailed-result"
+        style="margin-top: 20px; display: none; background: #f9f9f9; padding: 15px; border-left: 5px solid #e67e22;">
+        <h4 style="margin: 0 0 10px 0;">შედეგი:</h4>
+        <p>📐 ჯამური მოცულობა: <span id="vol-res">0</span> მ³</p>
+        <p>📦 ცემენტი (50კგ): <span id="cem-res">0</span> ტომარა</p>
+        <p>⏳ ქვიშა/ღორღი: <span id="agg-res">0</span> მ³</p>
+        <hr>
+        <h3 style="color: #c0392b;">ჯამური სავარაუდო ფასი: <span id="price-res">0</span> ₾</h3>
+    </div>
 </div>
 
 <script>
-    // შეტყობინების გაგზავნის ფუნქცია
-    function sendMessage() {
-        const name = document.getElementById('userName').value;
-        const msg = document.getElementById('userMsg').value;
-        const response = document.getElementById('responseMsg');
+    function calculateFull() {
+        // მონაცემების წაკითხვა
+        let l = parseFloat(document.getElementById('L').value) || 0;
+        let w = parseFloat(document.getElementById('W').value) || 0;
+        let h = parseFloat(document.getElementById('H').value) || 0;
 
-        if (name && msg) {
-            response.innerText = "მადლობა " + name + ", თქვენი შეტყობინება მიღებულია!";
-            // ველების გასუფთავება
-            document.getElementById('userName').value = "";
-            document.getElementById('userMsg').value = "";
-        } else {
-            response.style.color = "red";
-            response.innerText = "გთხოვთ, შეავსოთ ორივე ველი!";
-        }
+        // 1. მოცულობის გამოთვლა
+        let volume = l * w * h;
+
+        // 2. მასალების დათვლა (საშუალოდ B25 მარკისთვის 1მ³-ზე მიდის 7-8 ტომარა ცემენტი)
+        let cementBags = Math.ceil(volume * 7.5);
+        let aggregates = volume * 1.2; // დანაკარგის გათვალისწინებით
+
+        // 3. ფასის დათვლა (ცემენტი ~15₾, ბეტონი საშუალოდ 210₾ მ³)
+        let totalPrice = volume * 210;
+
+        // შედეგების გამოჩენა
+        document.getElementById('vol-res').innerText = volume.toFixed(2);
+        document.getElementById('cem-res').innerText = cementBags;
+        document.getElementById('agg-res').innerText = aggregates.toFixed(2);
+        document.getElementById('price-res').innerText = totalPrice.toFixed(0);
+
+        document.getElementById('detailed-result').style.display = 'block';
     }
 </script>

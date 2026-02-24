@@ -89,6 +89,58 @@
 
 
 </html>
+
+<body>
+    <div style="max-width: 800px; margin: auto; padding: 20px; font-family: 'Arial', sans-serif;">
+        <h1 style="color: #2c3e50; border-bottom: 3px solid #e67e22;">სამშენებლო პორტალი 🏗️</h1>
+
+        <div style="background: #fdf2e9; padding: 20px; border-radius: 10px; margin-top: 20px;">
+            <h3>ბეტონის ხარჯის კალკულატორი (მოცულობა)</h3>
+            <label>სიგრძე (მ):</label>
+            <input type="number" id="length" placeholder="0" style="width: 80px; margin: 5px;">
+            <label>სიგანე (მ):</label>
+            <input type="number" id="width" placeholder="0" style="width: 80px; margin: 5px;">
+            <label>სისქე (მ):</label>
+            <input type="number" id="height" placeholder="0" style="width: 80px; margin: 5px;">
+            <br><br>
+            <button onclick="calculate()"
+                style="background: #e67e22; color: white; padding: 10px 20px; border: none; cursor: pointer;">გამოთვლა</button>
+            <h4 id="result" style="color: #d35400;">საჭირო მოცულობა: 0 მ³</h4>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <h3>არქიტექტურა და კონსტრუქციები</h3>
+            <p style="font-style: italic; color: #7f8c8d;">აქ შეგიძლიათ განიხილოთ პროექტის დეტალები...</p>
+            <table border="1" style="width: 100%; border-collapse: collapse; text-align: left;">
+                <tr style="background: #2c3e50; color: white;">
+                    <th style="padding: 10px;">მასალა</th>
+                    <th style="padding: 10px;">ერთეული</th>
+                    <th style="padding: 10px;">ფასი (₾)</th>
+                </tr>
+                <tr>
+                    <td style="padding: 10px;">არმატება (A500C)</td>
+                    <td style="padding: 10px;">ტონა</td>
+                    <td style="padding: 10px;">2400</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px;">ბეტონი (B25)</td>
+                    <td style="padding: 10px;">მ³</td>
+                    <td style="padding: 10px;">210</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function calculate() {
+            const l = document.getElementById('length').value;
+            const w = document.getElementById('width').value;
+            const h = document.getElementById('height').value;
+            const res = l * w * h;
+            document.getElementById('result').innerText = "საჭირო მოცულობა: " + res.toFixed(2) + " მ³";
+        }
+    </script>
+</body>
 <div style="margin-top: 40px; padding: 20px; border-top: 2px solid #2c3e50; width: 80%; max-width: 400px;">
     <h3>მოგვწერეთ:</h3>
     <input type="text" id="userName" placeholder="თქვენი სახელი"

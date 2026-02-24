@@ -3,319 +3,211 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>სამშენებლო პორტალი - ორი ნაპირი</title>
+    <title>ორინაპირი - საინჟინრო კალკულატორი</title>
     <style>
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f4f7f6;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0;
-            padding-bottom: 50px;
-        }
-
-        .header {
-            background-color: #2c3e50;
-            color: white;
-            width: 100%;
+            font-family: sans-serif;
+            background: #f4f4f4;
             padding: 20px;
-            text-align: center;
-        }
-
-        .container {
-            max-width: 950px;
-            width: 95%;
-            margin: 20px auto;
         }
 
         .card {
             background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            max-width: 900px;
+            margin: 0 auto 20px auto;
         }
 
-        #clock {
-            font-size: 24px;
-            font-weight: bold;
-            color: #e67e22;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .calc-group {
+        .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 15px;
+            gap: 10px;
             margin-bottom: 15px;
         }
 
         input,
         select {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            box-sizing: border-box;
-            font-size: 15px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
 
         label {
+            font-size: 12px;
             font-weight: bold;
-            font-size: 13px;
-            color: #555;
+            color: #444;
         }
 
-        .result-box {
+        .res {
             padding: 15px;
-            border-radius: 8px;
+            border-radius: 4px;
             margin-top: 10px;
-            border-left: 6px solid;
-            line-height: 1.6;
         }
 
-        .concrete-res {
+        .concrete {
             background: #fff3e0;
-            border-left-color: #e67e22;
+            border-left: 5px solid #e67e22;
         }
 
-        .rebar-res {
-            background: #e1f5fe;
-            border-left-color: #0288d1;
+        .block {
+            background: #f3e5f5;
+            border-left: 5px solid #8e44ad;
         }
 
-        .block-res {
-            background: #f5eef8;
-            border-left-color: #8e44ad;
-        }
-
-        .plaster-res {
+        .plaster {
             background: #e8f5e9;
-            border-left-color: #2e7d32;
+            border-left: 5px solid #2e7d32;
+        }
+
+        .total {
+            font-weight: bold;
+            color: #c0392b;
+            font-size: 18px;
+            margin-top: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        th {
+            background: #2c3e50;
+            color: white;
         }
 
         .add-btn {
             background: #27ae60;
             color: white;
             border: none;
-            padding: 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background: white;
-        }
-
-        th,
-        td {
             padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-            font-size: 13px;
-        }
-
-        th {
-            background-color: #2c3e50;
-            color: white;
-        }
-
-        .total-row {
-            background: #ecf0f1;
+            cursor: pointer;
+            border-radius: 4px;
+            width: 100%;
             font-weight: bold;
-            font-size: 16px;
+            margin-top: 10px;
         }
 
-        .mat-list {
-            font-size: 0.85em;
-            color: #d35400;
+        .mat-info {
             font-weight: bold;
+            color: #2c3e50;
+            font-size: 14px;
             margin: 5px 0;
-        }
-
-        .logo {
-            width: 220px;
-            border-radius: 12px;
-            display: block;
-            margin: 0 auto 10px;
-            border: 2px solid #eee;
         }
     </style>
 </head>
 
 <body>
 
-    <div class="header">
-        <h1>საინჟინრო-სამშენებლო პორტალი 🏗️</h1>
+    <div class="card">
+        <h2 style="text-align:center; margin-top:0;">🏗️ ორინაპირი - საინჟინრო კალკულატორი</h2>
+
+        <div class="res concrete">
+            <strong>ბეტონის გაანგარიშება:</strong>
+            <div class="grid">
+                <div><label>მოცულობა (მ³)</label><input type="number" id="cV" value="1" oninput="calc()"></div>
+                <div><label>მასალა (₾/მ³)</label><input type="number" id="cMP" value="180" oninput="calc()"></div>
+                <div><label>ხელობა (₾/მ³)</label><input type="number" id="cWP" value="170" oninput="calc()"></div>
+            </div>
+            <div class="mat-info" id="cDetail">📦 მასალა: 370 კგ ცემენტი | 0.45 მ³ ქვიშა | 0.85 მ³ ღორღი</div>
+            <div class="total">ჯამი: <span id="cSum">350</span> ₾</div>
+            <button class="add-btn" onclick="add('ბეტონი', 'cDetail', 'cSum')">რეესტრში დამატება</button>
+        </div>
+
+        <div class="res block" style="margin-top:20px;">
+            <strong>ბლოკის წყობა (20-იანი ბლოკი):</strong>
+            <div class="grid">
+                <div><label>ფართობი (მ²)</label><input type="number" id="bS" value="10" oninput="calc()"></div>
+                <div><label>ბლოკი (ც/₾)</label><input type="number" id="bMP" value="1.5" oninput="calc()"></div>
+                <div><label>ხელობა (ც/₾)</label><input type="number" id="bWP" value="1.5" oninput="calc()"></div>
+            </div>
+            <div class="mat-info" id="bDetail">📦 მასალა: 125 ცალი ბლოკი | 75 კგ ცემენტი | 0.18 მ³ ქვიშა</div>
+            <div class="total">ჯამი: <span id="bSum">375</span> ₾</div>
+            <button class="add-btn" style="background:#8e44ad" onclick="add('ბლოკი', 'bDetail', 'bSum')">რეესტრში
+                დამატება</button>
+        </div>
+
+        <div class="res plaster" style="margin-top:20px;">
+            <strong>ფასადის ლესვა:</strong>
+            <div class="grid">
+                <div><label>ფართობი (მ²)</label><input type="number" id="pS" value="50" oninput="calc()"></div>
+                <div><label>მასალა (მ²/₾)</label><input type="number" id="pMP" value="6" oninput="calc()"></div>
+                <div><label>ხელობა (მ²/₾)</label><input type="number" id="pWP" value="15" oninput="calc()"></div>
+            </div>
+            <div class="mat-info" id="pDetail">📦 მასალა: 450 კგ ცემენტი | 1.50 მ³ ქვიშა</div>
+            <div class="total">ჯამი: <span id="pSum">1050</span> ₾</div>
+            <button class="add-btn" style="background:#2e7d32" onclick="add('ლესვა', 'pDetail', 'pSum')">რეესტრში
+                დამატება</button>
+        </div>
     </div>
 
-    <div class="container">
-        <div class="card">
-            <div id="clock">00:00:00</div>
-            <img src="New DOC Document.jpg" class="logo" alt="ორი ნაპირი">
-            <h2 style="text-align:center; margin:0; color:#2c3e50;">ორი ნაპირი</h2>
-        </div>
-
-        <div class="card">
-            <h3 style="color: #e67e22; margin:0 0 15px 0;">ბეტონი (1:2:4 პროპორცია)</h3>
-            <div class="calc-group">
-                <div><label>მოცულობა (მ³)</label><input type="number" id="betonV" value="1" oninput="calculateAll()">
-                </div>
-                <div><label>მასალა (₾/მ³)</label><input type="number" id="betonPrice" value="180"
-                        oninput="calculateAll()"></div>
-                <div><label>ხელობა (₾/მ³)</label><input type="number" id="betonWorkPrice" value="170"
-                        oninput="calculateAll()"></div>
-            </div>
-            <div class="result-box concrete-res">
-                <div class="mat-list" id="beton-mat-detail">📦 საჭიროა: 7.4 ტომარა ცემენტი | 0.45 მ³ ქვიშა | 0.9 მ³
-                    ღორღი</div>
-                <h3 style="color: #c0392b; margin: 5px 0 0 0;">💰 ჯამური: <span id="c-total">350</span> ₾</h3>
-                <small>(მასალა: <span id="c-m">180</span>₾ | ხელობა: <span id="c-w">170</span>₾)</small>
-                <button class="add-btn" onclick="addToTable('concrete')">სიაში დამატება +</button>
-            </div>
-        </div>
-
-        <div class="card">
-            <h3 style="color: #8e44ad; margin:0 0 15px 0;">ბლოკის წყობა (დუღაბით) 🧱</h3>
-            <div class="calc-group">
-                <div><label>ფართობი (მ²)</label><input type="number" id="blockSq" value="10" oninput="calculateAll()">
-                </div>
-                <div><label>ტიპი</label>
-                    <select id="blockType" onchange="calculateAll()">
-                        <option value="10">10x40x20</option>
-                        <option value="20" selected>20x40x20</option>
-                        <option value="30">30x40x20</option>
-                    </select>
-                </div>
-                <div><label>ბლოკი (ც/₾)</label><input type="number" id="bPrice" value="1.50" oninput="calculateAll()">
-                </div>
-                <div><label>ხელობა (ც/₾)</label><input type="number" id="bWork" value="1.50" oninput="calculateAll()">
-                </div>
-            </div>
-            <div class="result-box block-res">
-                <div class="mat-list" id="block-mat-detail">📦 საჭიროა: 125 ცალი ბლოკი | 1.2 ტომარა ცემენტი | 0.18 მ³
-                    ქვიშა</div>
-                <h3 style="color: #c0392b; margin: 5px 0 0 0;">💰 ჯამური: <span id="b-total">0</span> ₾</h3>
-                <button class="add-btn" style="background:#8e44ad;" onclick="addToTable('block')">სიაში დამატება
-                    +</button>
-            </div>
-        </div>
-
-        <div class="card">
-            <h3 style="color: #2e7d32; margin:0 0 15px 0;">ფასადის ლესვა (სისქე 2.5სმ)</h3>
-            <div class="calc-group">
-                <div><label>ფართობი (მ²)</label><input type="number" id="pSq" value="50" oninput="calculateAll()"></div>
-                <div><label>მასალა (მ²/₾)</label><input type="number" id="pMatP" value="6" oninput="calculateAll()">
-                </div>
-                <div><label>ხელობა (მ²/₾)</label><input type="number" id="pWorkP" value="15" oninput="calculateAll()">
-                </div>
-            </div>
-            <div class="result-box plaster-res">
-                <div class="mat-list" id="plaster-mat-detail">📦 საჭიროა: 8.8 ტომარა ცემენტი | 1.5 მ³ ქვიშა</div>
-                <h3 style="color: #c0392b; margin: 5px 0 0 0;">💰 ჯამური: <span id="p-total">0</span> ₾</h3>
-                <button class="add-btn" style="background:#2e7d32;" onclick="addToTable('plaster')">სიაში დამატება
-                    +</button>
-            </div>
-        </div>
-
-        <div class="card">
-            <h3>📑 ხარჯთაღრიცხვის რეესტრი</h3>
-            <table id="mainTable">
-                <thead>
-                    <tr>
-                        <th>დასახელება</th>
-                        <th>რაოდენობა / მასალა</th>
-                        <th>ჯამი (₾)</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody id="estimate-body"></tbody>
-            </table>
-
-            <div style="background: #ecf0f1; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: right;">
-                <h2 style="margin:0;">საერთო ჯამი: <span id="grand-total">0</span> ₾</h2>
-            </div>
-            <button onclick="window.print()"
-                style="margin-top:15px; width:100%; padding:12px; cursor:pointer; font-weight:bold; background:#2c3e50; color:white; border:none; border-radius:5px;">🖨️
-                ბეჭდვა / PDF</button>
-        </div>
+    <div class="card">
+        <h3 style="margin-top:0;">📑 ხარჯთაღრიცხვის რეესტრი</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>დასახელება</th>
+                    <th>მასალების მოცულობა</th>
+                    <th>ფასი</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="list"></tbody>
+            <tfoot>
+                <tr style="background:#eee">
+                    <td><b>საერთო ჯამი</b></td>
+                    <td></td>
+                    <td><b id="grand">0</b> <b>₾</b></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+        <button onclick="window.print()"
+            style="margin-top:15px; width:100%; padding:10px; cursor:pointer; font-weight:bold;">🖨️ ბეჭდვა /
+            PDF</button>
     </div>
 
     <script>
-        function updateClock() { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }
-        setInterval(updateClock, 1000);
+        function calc() {
+            // ბეტონი (M300-ის სტანდარტი - 370კგ ცემენტი კუბზე)
+            let cv = parseFloat(document.getElementById('cV').value) || 0;
+            document.getElementById('cDetail').innerText = `📦 მასალა: ${Math.round(cv * 370)} კგ ცემენტი | ${(cv * 0.45).toFixed(2)} მ³ ქვიშა | ${(cv * 0.85).toFixed(2)} მ³ ღორღი`;
+            document.getElementById('cSum').innerText = Math.round(cv * (parseFloat(document.getElementById('cMP').value) + parseFloat(document.getElementById('cWP').value)));
 
-        let listSum = 0;
+            // ბლოკი (20-იანი, დუღაბის ხარჯი ~7.5კგ ცემენტი კვადრატზე)
+            let bs = parseFloat(document.getElementById('bS').value) || 0;
+            let count = Math.ceil(bs * 12.5);
+            document.getElementById('bDetail').innerText = `📦 მასალა: ${count} ცალი ბლოკი | ${Math.round(bs * 7.5)} კგ ცემენტი | ${(bs * 0.018).toFixed(2)} მ³ ქვიშა`;
+            document.getElementById('bSum').innerText = Math.round(count * (parseFloat(document.getElementById('bMP').value) + parseFloat(document.getElementById('bWP').value)));
 
-        function calculateAll() {
-            // ბეტონი
-            let bV = parseFloat(document.getElementById('betonV').value) || 0;
-            let cemB = (bV * 7.4).toFixed(1);
-            let sandB = (bV * 0.45).toFixed(2);
-            document.getElementById('beton-mat-detail').innerText = `📦 საჭიროა: ${cemB} ტომარა ცემენტი | ${sandB} მ³ ქვიშა | ${(bV * 0.9).toFixed(2)} მ³ ღორღი`;
-            document.getElementById('c-m').innerText = Math.round(bV * parseFloat(document.getElementById('betonPrice').value));
-            document.getElementById('c-w').innerText = Math.round(bV * parseFloat(document.getElementById('betonWorkPrice').value));
-            document.getElementById('c-total').innerText = Math.round(bV * (parseFloat(document.getElementById('betonPrice').value) + parseFloat(document.getElementById('betonWorkPrice').value)));
-
-            // ბლოკი
-            let bSq = parseFloat(document.getElementById('blockSq').value) || 0;
-            let bType = parseInt(document.getElementById('blockType').value);
-            let count = Math.ceil(bSq * 12.5);
-            let mortarV = (bSq * (bType / 100)) * 0.15; // 15% დუღაბი
-            let cemBl = (mortarV * 6).toFixed(1);
-            let sandBl = mortarV.toFixed(2);
-            document.getElementById('block-mat-detail').innerText = `📦 საჭიროა: ${count} ცალი | ${cemBl} ტომარა ცემენტი | ${sandBl} მ³ ქვიშა`;
-            document.getElementById('b-total').innerText = Math.round((count * parseFloat(document.getElementById('bPrice').value)) + (count * parseFloat(document.getElementById('bWork').value)));
-
-            // ლესვა
-            let pSq = parseFloat(document.getElementById('pSq').value) || 0;
-            let pVol = pSq * 0.025; // 2.5cm
-            let cemP = (pVol * 7).toFixed(1);
-            let sandP = (pVol * 1.2).toFixed(2);
-            document.getElementById('plaster-mat-detail').innerText = `📦 საჭიროა: ${cemP} ტომარა ცემენტი | ${sandP} მ³ ქვიშა`;
-            document.getElementById('p-total').innerText = Math.round(pSq * (parseFloat(document.getElementById('pMatP').value) + parseFloat(document.getElementById('pWorkP').value)));
+            // ლესვა (2.5სმ სისქეზე ~9კგ ცემენტი კვადრატზე)
+            let ps = parseFloat(document.getElementById('pS').value) || 0;
+            document.getElementById('pDetail').innerText = `📦 მასალა: ${Math.round(ps * 9)} კგ ცემენტი | ${(ps * 0.03).toFixed(2)} მ³ ქვიშა`;
+            document.getElementById('pSum').innerText = Math.round(ps * (parseFloat(document.getElementById('pMP').value) + parseFloat(document.getElementById('pWP').value)));
         }
 
-        function addToTable(type) {
-            const tbody = document.getElementById('estimate-body');
-            const row = document.createElement('tr');
-            let name, mat, price;
-
-            if (type === 'concrete') {
-                name = "ბეტონი (" + document.getElementById('betonV').value + "მ³)";
-                mat = document.getElementById('beton-mat-detail').innerText;
-                price = parseInt(document.getElementById('c-total').innerText);
-            } else if (type === 'block') {
-                name = "ბლოკი (" + document.getElementById('blockType').value + "სმ)";
-                mat = document.getElementById('block-mat-detail').innerText;
-                price = parseInt(document.getElementById('b-total').innerText);
-            } else if (type === 'plaster') {
-                name = "ლესვა (" + document.getElementById('pSq').value + "მ²)";
-                mat = document.getElementById('plaster-mat-detail').innerText;
-                price = parseInt(document.getElementById('p-total-cost' || 'p-total').innerText);
-            }
-
-            row.innerHTML = `<td><b>${name}</b></td><td style="color:#666;">${mat}</td><td><b>${price}</b></td><td><button onclick="removeRow(this, ${price})" style="color:red; border:none; background:none; cursor:pointer;">✕</button></td>`;
-            tbody.appendChild(row);
-            listSum += price;
-            document.getElementById('grand-total').innerText = listSum;
+        let total = 0;
+        function add(name, detId, sumId) {
+            let price = parseInt(document.getElementById(sumId).innerText);
+            let detail = document.getElementById(detId).innerText;
+            document.getElementById('list').innerHTML += `<tr><td><b>${name}</b></td><td>${detail}</td><td><b>${price}</b></td><td onclick="this.parentElement.remove(); updateGrand(-${price})" style="color:red; cursor:pointer; font-weight:bold;">✕</td></tr>`;
+            updateGrand(price);
         }
-
-        function removeRow(btn, price) {
-            btn.parentElement.parentElement.remove();
-            listSum -= price;
-            document.getElementById('grand-total').innerText = listSum;
-        }
-
-        window.onload = calculateAll;
+        function updateGrand(val) { total += val; document.getElementById('grand').innerText = total; }
+        window.onload = calc;
     </script>
 </body>
 

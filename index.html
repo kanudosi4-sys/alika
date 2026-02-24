@@ -88,60 +88,31 @@
 
 
 
-</html>
-<div class="card">
-    <h2>ბეტონის სრული კალკულატორი (B25 მარკა)</h2>
-    <div class="calc-group">
-        <div>
-            <label>სიგრძე (მ)</label><br>
-            <input type="number" id="L" value="1" step="0.1">
-        </div>
-        <div>
-            <label>სიგანე (მ)</label><br>
-            <input type="number" id="W" value="1" step="0.1">
-        </div>
-        <div>
-            <label>სისქე (მ)</label><br>
-            <input type="number" id="H" value="0.2" step="0.01">
-        </div>
-    </div>
+</html>function calculateFull() {
+// მონაცემების წაკითხვა
+let l = parseFloat(document.getElementById('L').value) || 0;
+let w = parseFloat(document.getElementById('W').value) || 0;
+let h = parseFloat(document.getElementById('H').value) || 0;
 
-    <button onclick="calculateFull()">დეტალური გამოთვლა</button>
+// 1. მოცულობის გამოთვლა
+let volume = l * w * h;
 
-    <div id="detailed-result"
-        style="margin-top: 20px; display: none; background: #f9f9f9; padding: 15px; border-left: 5px solid #e67e22;">
-        <h4 style="margin: 0 0 10px 0;">შედეგი:</h4>
-        <p>📐 ჯამური მოცულობა: <span id="vol-res">0</span> მ³</p>
-        <p>📦 ცემენტი (50კგ): <span id="cem-res">0</span> ტომარა</p>
-        <p>⏳ ქვიშა/ღორღი: <span id="agg-res">0</span> მ³</p>
-        <hr>
-        <h3 style="color: #c0392b;">ჯამური სავარაუდო ფასი: <span id="price-res">0</span> ₾</h3>
-    </div>
-</div>
+// 2. მასალების დათვლა შენი ფორმულით
+// 1მ3-ზე მიდის ~7.4 ტომარა (370კგ / 50კგ)
+let cementBags = Math.ceil(volume * 7.4);
+let aggregates = volume * 1.2;
 
-<script>
-    function calculateFull() {
-        // მონაცემების წაკითხვა
-        let l = parseFloat(document.getElementById('L').value) || 0;
-        let w = parseFloat(document.getElementById('W').value) || 0;
-        let h = parseFloat(document.getElementById('H').value) || 0;
+// 3. ფასის დათვლა შენი მონაცემებით:
+// ცემენტი (370კგ) = 114₾
+// ქვიშა/ხრეში (1.2მ3) = 66₾
+// ჯამში 1მ3 = 180₾
+let totalPrice = volume * 180;
 
-        // 1. მოცულობის გამოთვლა
-        let volume = l * w * h;
+// შედეგების გამოტანა ეკრანზე
+document.getElementById('vol-res').innerText = volume.toFixed(2);
+document.getElementById('cem-res').innerText = cementBags;
+document.getElementById('agg-res').innerText = aggregates.toFixed(2);
+document.getElementById('price-res').innerText = totalPrice.toFixed(0);
 
-        // 2. მასალების დათვლა (საშუალოდ B25 მარკისთვის 1მ³-ზე მიდის 7-8 ტომარა ცემენტი)
-        let cementBags = Math.ceil(volume * 7.5);
-        let aggregates = volume * 1.2; // დანაკარგის გათვალისწინებით
-
-        // 3. ფასის დათვლა (ცემენტი ~15₾, ბეტონი საშუალოდ 210₾ მ³)
-        let totalPrice = volume * 210;
-
-        // შედეგების გამოჩენა
-        document.getElementById('vol-res').innerText = volume.toFixed(2);
-        document.getElementById('cem-res').innerText = cementBags;
-        document.getElementById('agg-res').innerText = aggregates.toFixed(2);
-        document.getElementById('price-res').innerText = totalPrice.toFixed(0);
-
-        document.getElementById('detailed-result').style.display = 'block';
-    }
-</script>
+document.getElementById('detailed-result').style.display = 'block';
+}

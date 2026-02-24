@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>ორი ნაპირი - კალკულატორი</title>
+    <title>ორი ნაპირი - საინჟინრო კალკულატორი</title>
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
@@ -224,22 +224,21 @@
                         <option value="30">30-იანი</option>
                     </select>
                 </div>
-                <div><label>ბლოკის ფასი (ცალი)</label><input type="number" id="bPrice" value="1.5" disabled></div>
-                <div><label>ხელობა (ცალი)</label><input type="number" id="bWork" value="1.2" oninput="calc()"></div>
+                <div><label>ბლოკის ფასი (ცალი)</label><input type="number" id="bPrice" value="1.60" disabled></div>
+                <div><label>ხელობა (ცალი)</label><input type="number" id="bWork" value="1.50" disabled></div>
             </div>
             <div class="res-box" style="border-left-color: #8e44ad;">
                 <div class="mat-row"><span>რაოდენობა:</span> <span><span id="bCount">125</span> ცალი</span></div>
                 <div class="mat-row"><span>ცემენტი:</span> <span><span id="bCem">75</span> კგ</span></div>
                 <div class="mat-row"><span>ქვიშა:</span> <span><span id="bSand">0.18</span> მ³</span></div>
                 <div class="total-line">
-                    <div style="font-size: 13px;">მასალა: <span id="bMatSum">188</span> ₾ | ხელობა: <span
-                            id="bWorkSum">150</span> ₾</div>
+                    <div style="font-size: 13px;">მასალა: <span id="bMatSum">200</span> ₾ | ხელობა: <span
+                            id="bWorkSum">188</span> ₾</div>
                     <button class="add-btn" style="background:#8e44ad"
                         onclick="add('ბლოკი', 'bS', 'bMatSum', 'bWorkSum', 'მ²')">დამატება</button>
                 </div>
             </div>
         </div>
-
 
         <div class="card no-print">
             <h3 style="color:#27ae60; margin-top:0;">🎨 ლესვა</h3>
@@ -309,30 +308,33 @@
             document.getElementById('cMatSum').innerText = Math.round(cv * parseFloat(document.getElementById('cMP').value));
             document.getElementById('cWorkSum').innerText = Math.round(cv * parseFloat(document.getElementById('cWP').value));
 
-            // ბლოკი
+            // ბლოკი (განახლებული ფასები შენი მოთხოვნით)
             let bs = parseFloat(document.getElementById('bS').value) || 0;
             let bsize = document.getElementById('bSize').value;
             let count = Math.ceil(bs * 12.5);
             document.getElementById('bCount').innerText = count;
 
-            let unitPrice = (bsize == "10") ? 1.2 : (bsize == "20" ? 1.5 : 2.0);
-            document.getElementById('bPrice').value = unitPrice;
+            // ხელობა: 10-იანი: 1.20, 20-იანი: 1.50, 30-იანი: 2.00
+            let workPrice = (bsize == "10") ? 1.20 : (bsize == "20" ? 1.50 : 2.00);
+            // მასალა: 10-იანი: 1.10, 20-იანი: 1.60, 30-იანი: 2.40
+            let matPrice = (bsize == "10") ? 1.10 : (bsize == "20" ? 1.60 : 2.40);
+
+            document.getElementById('bWork').value = workPrice.toFixed(2);
+            document.getElementById('bPrice').value = matPrice.toFixed(2);
 
             let bCemCoef = bsize == "10" ? 5 : (bsize == "20" ? 7.5 : 10);
             let bSandCoef = bsize == "10" ? 0.012 : (bsize == "20" ? 0.018 : 0.025);
             document.getElementById('bCem').innerText = Math.round(bs * bCemCoef);
             document.getElementById('bSand').innerText = (bs * bSandCoef).toFixed(3);
-            document.getElementById('bMatSum').innerText = Math.round(count * unitPrice);
-            document.getElementById('bWorkSum').innerText = Math.round(count * parseFloat(document.getElementById('bWork').value));
+
+            document.getElementById('bMatSum').innerText = Math.round(count * matPrice);
+            document.getElementById('bWorkSum').innerText = Math.round(count * workPrice);
 
             // ლესვა
             let ps = parseFloat(document.getElementById('pS').value) || 0;
             let pt = parseFloat(document.getElementById('pThick').value);
-
-            // ფასი სისქის მიხედვით: 2სმ-4.8ლ, 2.5სმ-6ლ, 3სმ-7.2ლ (ბაზად აღებულია 2.5სმ = 6ლ)
-            let dynamicPrice = (pt / 2.5) * 6;
+            let dynamicPrice = (pt / 2.5) * 6; // ბაზა 2.5სმ = 6ლ
             document.getElementById('pPrice').value = dynamicPrice.toFixed(2);
-
             document.getElementById('pCem').innerText = Math.round(ps * pt * 3.6);
             document.getElementById('pSand').innerText = (ps * pt * 0.012).toFixed(2);
             document.getElementById('pMatSum').innerText = Math.round(ps * dynamicPrice);

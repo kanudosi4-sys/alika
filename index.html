@@ -6,32 +6,54 @@
     <style>
         body {
             background-color: #f0f8ff;
-            /* ღია ცისფერი ფონი */
-            font-family: sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
+            /* ანიმაციის პარამეტრები */
+            animation: fadeInAnimation ease 3s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes fadeInAnimation {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        img {
+            width: 300px;
+            border-radius: 50%;
+            /* ფოტო გახდება მრგვალი */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform .2s;
+            /* მიტანის ეფექტისთვის */
+        }
+
+        img:hover {
+            transform: scale(1.1);
+            /* მაუსის მიტანისას ფოტო გაიზრდება */
         }
 
         h1 {
             color: #2c3e50;
-            /* მუქი ლურჯი ტექსტი */
-        }
-
-        p {
-            color: #34495e;
-            font-size: 1.2rem;
+            margin-top: 20px;
         }
     </style>
 </head>
 
 <body>
-    <h1>გამარჯობა!</h1>
-    <img src="myphoto.jpg" alt="ჩემი ფოტო" style="width: 300px; border-radius: 10px; margin: 20px;">
-    <p>ეს ჩემი პირველი ვებ-გვერდია, რომელიც უკვე უფრო ლამაზად გამოიყურება!</p>
+    <img src="Screenshot (3)(1).jpg" alt="ჩემი ფოტო">
+    <h1>მოგესალმებით ჩემს საიტზე!</h1>
+    <p>ეს საიტი ანიმაციურია ✨</p>
 </body>
 
 </html>

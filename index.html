@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>სამშენებლო პორტალი</title>
+    <title>სამშენებლო პორტალი - ორი ნაპირი</title>
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
@@ -49,7 +49,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             gap: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         input,
@@ -62,12 +62,18 @@
             font-size: 15px;
         }
 
+        label {
+            font-weight: bold;
+            font-size: 13px;
+            color: #555;
+        }
+
         .result-box {
             padding: 15px;
             border-radius: 8px;
             margin-top: 10px;
             border-left: 6px solid;
-            line-height: 1.6;
+            line-height: 1.8;
         }
 
         .concrete-res {
@@ -84,7 +90,7 @@
             background: #27ae60;
             color: white;
             border: none;
-            padding: 10px;
+            padding: 12px;
             border-radius: 5px;
             cursor: pointer;
             width: 100%;
@@ -97,8 +103,6 @@
             border-collapse: collapse;
             margin-top: 20px;
             background: white;
-            border-radius: 8px;
-            overflow: hidden;
         }
 
         th,
@@ -117,6 +121,15 @@
         .total-row {
             background: #ecf0f1;
             font-weight: bold;
+            font-size: 16px;
+        }
+
+        .logo {
+            width: 220px;
+            border-radius: 12px;
+            display: block;
+            margin: 0 auto 10px;
+            border: 2px solid #eee;
         }
     </style>
 </head>
@@ -128,33 +141,36 @@
     </div>
 
     <div class="container">
-        <div class="card" style="text-align: center;">
+        <div class="card">
             <div id="clock">00:00:00</div>
-            <img src="New DOC Document.jpg" style="width:200px; border-radius:12px;" alt="ლოგო">
-            <h2 style="margin-top:10px;">ორი ნაპირი</h2>
+            <img src="New DOC Document.jpg" class="logo" alt="ორი ნაპირი">
+            <h2 style="text-align:center; margin:0; color:#2c3e50;">ორი ნაპირი</h2>
         </div>
 
         <div class="card">
-            <h3 style="color: #e67e22; margin-top:0;">ბეტონი (180₾ / მ³)</h3>
+            <h3 style="color: #e67e22; margin-top:0; border-bottom: 2px solid #fff3e0;">ბეტონის სრული გაანგარიშება</h3>
             <div class="calc-group">
-                <div><label>დასახელება</label><input type="text" id="cName" value="ფილა"></div>
+                <div><label>დასახელება</label><input type="text" id="cName" value="საძირკველი"></div>
                 <div><label>სიგრძე (მ)</label><input type="number" id="L" value="1" oninput="calculate()"></div>
                 <div><label>სიგანე (მ)</label><input type="number" id="W" value="1" oninput="calculate()"></div>
                 <div><label>სისქე (მ)</label><input type="number" id="H" value="0.2" oninput="calculate()"></div>
             </div>
             <div class="result-box concrete-res">
+                <p>🟦 ფართობი: <b><span id="sq-res">1.00</span> მ²</b></p>
                 <p>📐 მოცულობა: <b><span id="vol-res">0.20</span> მ³</b></p>
-                <p>⚖️ ცემენტი (370კგ/მ³): <b><span id="cem-kg-res">74.0</span> კგ</b></p>
-                <p>⏳ ქვიშა/ხრეში (1.2): <b><span id="agg-res">0.24</span> მ³</b></p>
-                <h3 style="color: #c0392b; margin: 10px 0 0 0;">💰 ფასი: <span id="price-res">36</span> ₾</h3>
+                <p>⚪ ცემენტი (370კგ/მ³): <b><span id="cem-kg-res">74.0</span> კგ</b></p>
+                <p>⏳ ქვიშა-ხრეში (1.2): <b><span id="agg-res">0.24</span> მ³</b> (ქვიშა: <span
+                        id="sand-res">0.10</span>, ღორღი: <span id="stone-res">0.14</span>)</p>
+                <h3 style="color: #c0392b; margin: 10px 0 0 0;">💰 ჯამური ფასი: <span id="price-res">36</span> ₾</h3>
                 <button class="add-btn" onclick="addToTable('concrete')">სიაში დამატება +</button>
             </div>
         </div>
 
         <div class="card">
-            <h3 style="color: #0288d1; margin-top:0;">არმატურა</h3>
+            <h3 style="color: #0288d1; margin-top:0; border-bottom: 2px solid #e1f5fe;">არმატურის გაანგარიშება და
+                უკუგათვლა</h3>
             <div class="calc-group">
-                <div><label>დასახელება</label><input type="text" id="rName" value="კოლონა"></div>
+                <div><label>დასახელება</label><input type="text" id="rName" value="არმატურა"></div>
                 <div>
                     <label>დიამეტრი</label>
                     <select id="dia" onchange="calculate()">
@@ -166,13 +182,16 @@
                         <option value="2.47">20 მმ</option>
                     </select>
                 </div>
-                <div><label>სულ მეტრი</label><input type="number" id="rebarL" value="10" oninput="calculate()"></div>
+                <div><label>სულ მეტრი (მ)</label><input type="number" id="rebarL" value="10" oninput="calculate()">
+                </div>
+                <div><label>სულ წონა (კგ)</label><input type="number" id="rebarKG" value="8.88"
+                        oninput="calculateReverse()"></div>
                 <div><label>ტონის ფასი (₾)</label><input type="number" id="tonPrice" value="2400" oninput="calculate()">
                 </div>
             </div>
             <div class="result-box rebar-res">
-                <p>📏 სიგრძე: <b><span id="res-len">10.00</span> მ</b> | ⚖️ წონა: <b><span id="res-weight">8.88</span>
-                        კგ</b></p>
+                <p>📏 გაანგარიშებული სიგრძე: <b><span id="res-m">10.00</span> მ</b></p>
+                <p>⚖️ გაანგარიშებული წონა: <b><span id="res-kg">8.88</span> კგ</b></p>
                 <h3 style="color: #c0392b; margin: 10px 0 0 0;">💰 ღირებულება: <span id="rebar-cost">21</span> ₾</h3>
                 <button class="add-btn" style="background:#3498db;" onclick="addToTable('rebar')">სიაში დამატება
                     +</button>
@@ -180,12 +199,12 @@
         </div>
 
         <div class="card">
-            <h3 style="border:none;">📑 ხარჯთაღრიცხვის ცხრილი</h3>
+            <h3 style="margin-top:0;">📑 ხარჯთაღრიცხვის რეესტრი</h3>
             <table id="estTable">
                 <thead>
                     <tr>
                         <th>დასახელება</th>
-                        <th>დეტალები</th>
+                        <th>მასალა / რაოდენობა</th>
                         <th>ფასი (₾)</th>
                         <th></th>
                     </tr>
@@ -193,54 +212,62 @@
                 <tbody id="estimate-body"></tbody>
                 <tfoot>
                     <tr class="total-row">
-                        <td colspan="2">საერთო ჯამი:</td>
+                        <td colspan="2">საერთო ბიუჯეტი:</td>
                         <td id="grand-total">0</td>
                         <td>₾</td>
                     </tr>
                 </tfoot>
             </table>
             <button onclick="window.print()"
-                style="margin-top:15px; width:100%; padding:10px; cursor:pointer; font-weight:bold;">🖨️ ამობეჭდვა /
-                PDF</button>
+                style="margin-top:15px; width:100%; padding:12px; cursor:pointer; font-weight:bold; background:#2c3e50; color:white; border:none; border-radius:5px;">🖨️
+                ბეჭდვა / PDF შენახვა</button>
         </div>
     </div>
 
     <script>
-        function updateClock() {
-            const clockEl = document.getElementById('clock');
-            if (clockEl) clockEl.innerText = new Date().toLocaleTimeString();
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
+        function updateClock() { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }
+        setInterval(updateClock, 1000); updateClock();
 
         let totalSum = 0;
 
         function calculate() {
-            // ბეტონი
             let l = parseFloat(document.getElementById('L').value) || 0;
             let w = parseFloat(document.getElementById('W').value) || 0;
             let h = parseFloat(document.getElementById('H').value) || 0;
             let vol = l * w * h;
+            document.getElementById('sq-res').innerText = (l * w).toFixed(2);
             document.getElementById('vol-res').innerText = vol.toFixed(2);
             document.getElementById('cem-kg-res').innerText = (vol * 370).toFixed(1);
+            document.getElementById('sand-res').innerText = (vol * 0.5).toFixed(2);
+            document.getElementById('stone-res').innerText = (vol * 0.7).toFixed(2);
             document.getElementById('agg-res').innerText = (vol * 1.2).toFixed(2);
             document.getElementById('price-res').innerText = Math.round(vol * 180);
 
-            // არმატურა
             let coeff = parseFloat(document.getElementById('dia').value);
             let m = parseFloat(document.getElementById('rebarL').value) || 0;
             let kg = m * coeff;
-            let tPrice = parseFloat(document.getElementById('tonPrice').value) || 0;
-            document.getElementById('res-len').innerText = m.toFixed(2);
-            document.getElementById('res-weight').innerText = kg.toFixed(2);
-            document.getElementById('rebar-cost').innerText = Math.round((kg / 1000) * tPrice);
+            let tp = parseFloat(document.getElementById('tonPrice').value) || 0;
+            document.getElementById('res-m').innerText = m.toFixed(2);
+            document.getElementById('res-kg').innerText = kg.toFixed(2);
+            document.getElementById('rebarKG').value = kg.toFixed(2);
+            document.getElementById('rebar-cost').innerText = Math.round((kg / 1000) * tp);
+        }
+
+        function calculateReverse() {
+            let coeff = parseFloat(document.getElementById('dia').value);
+            let kg = parseFloat(document.getElementById('rebarKG').value) || 0;
+            let m = kg / coeff;
+            let tp = parseFloat(document.getElementById('tonPrice').value) || 0;
+            document.getElementById('res-m').innerText = m.toFixed(2);
+            document.getElementById('res-kg').innerText = kg.toFixed(2);
+            document.getElementById('rebarL').value = m.toFixed(2);
+            document.getElementById('rebar-cost').innerText = Math.round((kg / 1000) * tp);
         }
 
         function addToTable(type) {
             const tbody = document.getElementById('estimate-body');
             const row = document.createElement('tr');
             let name, info, price;
-
             if (type === 'concrete') {
                 name = document.getElementById('cName').value;
                 info = document.getElementById('vol-res').innerText + " მ³ ბეტონი";
@@ -250,8 +277,7 @@
                 info = document.getElementById('res-weight').innerText + " კგ არმატურა";
                 price = parseInt(document.getElementById('rebar-cost').innerText);
             }
-
-            row.innerHTML = `<td>${name}</td><td>${info}</td><td>${price}</td><td><button style="color:red; cursor:pointer; border:none; background:none;" onclick="removeRow(this, ${price})">❌</button></td>`;
+            row.innerHTML = `<td>${name}</td><td>${info}</td><td>${price}</td><td><button style="color:red; cursor:pointer; border:none; background:none; font-weight:bold;" onclick="removeRow(this, ${price})">✕</button></td>`;
             tbody.appendChild(row);
             totalSum += price;
             document.getElementById('grand-total').innerText = totalSum;
@@ -262,7 +288,6 @@
             totalSum -= price;
             document.getElementById('grand-total').innerText = totalSum;
         }
-
         window.onload = calculate;
     </script>
 </body>

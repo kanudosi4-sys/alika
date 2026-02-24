@@ -13,7 +13,6 @@
             flex-direction: column;
             align-items: center;
             color: #333;
-            transition: background-color 0.5s;
         }
 
         .header {
@@ -44,50 +43,42 @@
             font-size: 24px;
             font-weight: bold;
             color: #e67e22;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .calc-group {
-            display: flex;
-            justify-content: space-around;
-            gap: 10px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
             margin-bottom: 20px;
         }
 
         input {
-            width: 80px;
-            padding: 8px;
+            width: 100%;
+            padding: 10px;
             border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        button {
-            background-color: #e67e22;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        button:hover {
-            background-color: #d35400;
+            border-radius: 6px;
+            box-sizing: border-box;
         }
 
         .profile-img {
             width: 250px;
-            border-radius: 15px;
+            border-radius: 10px;
             margin-bottom: 15px;
         }
 
-        #detailed-result {
+        .result-box {
             background: #fff3e0;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-            display: none;
+            padding: 20px;
+            border-radius: 10px;
             text-align: left;
+            border-left: 6px solid #e67e22;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.1em;
         }
     </style>
 </head>
@@ -101,29 +92,36 @@
     <div class="container">
         <div class="card">
             <div id="clock">00:00:00</div>
-            <p>მიმდინარე დრო</p>
-        </div>
-
-        <div class="card">
             <img src="New DOC Document.jpg" class="profile-img" alt="პროექტი">
             <h2>ორი ნაპირი</h2>
-            <button onclick="changeBg()">შეცვალე ფონი ✨</button>
         </div>
 
         <div class="card">
-            <h3>ბეტონის ხარჯის დათვლა (180₾ / მ³)</h3>
-            <div class="calc-group">
-                <div><label>სიგრძე</label><br><input type="number" id="L" value="1"></div>
-                <div><label>სიგანე</label><br><input type="number" id="W" value="1"></div>
-                <div><label>სისქე</label><br><input type="number" id="H" value="0.2"></div>
-            </div>
-            <button onclick="calculateFull()">დეტალური გამოთვლა</button>
+            <h3 style="color: #e67e22;">ბეტონის საინჟინრო კალკულატორი (180₾ / მ³)</h3>
 
-            <div id="detailed-result">
-                <p>📐 მოცულობა: <span id="vol-res">0</span> მ³</p>
-                <p>📦 ცემენტი (370კგ): <span id="cem-res">0</span> ტომარა</p>
-                <p>⏳ ქვიშა/ხრეში: <span id="agg-res">0</span> მ³</p>
-                <h3 style="color: #c0392b;">ჯამური ფასი: <span id="price-res">0</span> ₾</h3>
+            <div class="calc-group">
+                <div>
+                    <label>სიგრძე (მ)</label>
+                    <input type="number" id="L" value="1" oninput="calculate()">
+                </div>
+                <div>
+                    <label>სიგანე (მ)</label>
+                    <input type="number" id="W" value="1" oninput="calculate()">
+                </div>
+                <div>
+                    <label>სისქე (მ)</label>
+                    <input type="number" id="H" value="0.2" oninput="calculate()">
+                </div>
+            </div>
+
+            <div class="result-box">
+                <p>🟦 ფართობი: <span id="sq-res" class="highlight">1.00</span> მ²</p>
+                <p>📐 მოცულობა: <span id="vol-res" class="highlight">0.20</span> მ³</p>
+                <p>⚖️ ცემენტი (370კგ/მ³): <span id="cem-kg-res" class="highlight" style="color: #d35400;">74.0</span> კგ
+                </p>
+                <p>⏳ ქვიშა/ხრეში (1.2): <span id="agg-res" class="highlight">0.24</span> მ³</p>
+                <hr style="border: 0.5px solid #ddd;">
+                <h2 style="color: #c0392b; margin: 10px 0 0 0;">ჯამური ფასი: <span id="price-res">36</span> ₾</h2>
             </div>
         </div>
     </div>
@@ -132,35 +130,35 @@
         // 1. საათის ფუნქცია
         function updateClock() {
             const now = new Date();
-            document.getElementById('clock').innerText = now.toLocaleTimeString();
+            const clockEl = document.getElementById('clock');
+            if (clockEl) clockEl.innerText = now.toLocaleTimeString();
         }
         setInterval(updateClock, 1000);
         updateClock();
 
-        // 2. ფონის შეცვლა
-        function changeBg() {
-            const colors = ['#f4f7f6', '#e8f4f8', '#fdf2e9', '#f4ecf7'];
-            document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        }
-
-        // 3. კალკულატორი შენი ფორმულით
-        function calculateFull() {
+        // 2. გამოთვლის ფუნქცია
+        function calculate() {
             let l = parseFloat(document.getElementById('L').value) || 0;
             let w = parseFloat(document.getElementById('W').value) || 0;
             let h = parseFloat(document.getElementById('H').value) || 0;
 
-            let volume = l * w * h;
-            let cementBags = Math.ceil(volume * 7.4);
+            // ფორმულები
+            let area = l * w;
+            let volume = area * h;
+            let cementKg = volume * 370;
             let aggregates = volume * 1.2;
             let totalPrice = volume * 180;
 
+            // შედეგების ჩაწერა ეკრანზე
+            document.getElementById('sq-res').innerText = area.toFixed(2);
             document.getElementById('vol-res').innerText = volume.toFixed(2);
-            document.getElementById('cem-res').innerText = cementBags;
+            document.getElementById('cem-kg-res').innerText = cementKg.toFixed(1);
             document.getElementById('agg-res').innerText = aggregates.toFixed(2);
-            document.getElementById('price-res').innerText = totalPrice.toFixed(0);
-
-            document.getElementById('detailed-result').style.display = 'block';
+            document.getElementById('price-res').innerText = Math.round(totalPrice);
         }
+
+        // პირველადი გამოთვლა ჩატვირთვისას
+        window.onload = calculate;
     </script>
 
 </body>

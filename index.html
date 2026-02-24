@@ -161,18 +161,17 @@
                 <div><label>სისქე (მ)</label><input type="number" id="H" value="0.2" oninput="calculateAll()"></div>
             </div>
             <div class="result-box concrete-res">
-                <p>🟦 ფართობი: <b><span id="sq-res">1.00</span> მ²</b></p>
-                <p>📐 მოცულობა: <b><span id="vol-res">0.20</span> მ³</b></p>
-                <p>⚪ ცემენტი (370კგ/მ³): <b><span id="cem-kg-res">74.0</span> კგ</b></p>
-                <p>⏳ ქვიშა: <span id="sand-res">0.10</span>, ღორღი: <span id="stone-res">0.14</span> (ჯამში: <span
-                        id="agg-res">0.24</span> მ³)</p>
-                <h3 style="color: #c0392b; margin: 10px 0 0 0;">💰 ფასი (180₾/მ³): <span id="price-res">36</span> ₾</h3>
+                <p>🟦 ფართობი: <b><span id="sq-res">1.00</span> მ²</b> | 📐 მოცულობა: <b><span id="vol-res">0.20</span>
+                        მ³</b></p>
+                <p>⚪ ცემენტი: <b><span id="cem-kg-res">74.0</span> კგ</b> | ⏳ ქვიშა/ღორღი: <b><span
+                            id="agg-res">0.24</span> მ³</b></p>
+                <h3 style="color: #c0392b; margin: 5px 0 0 0;">💰 ფასი (180₾/მ³): <span id="price-res">36</span> ₾</h3>
                 <button class="add-btn" onclick="addToTable('concrete')">სიაში დამატება +</button>
             </div>
         </div>
 
         <div class="card">
-            <h3 style="color: #0288d1; margin-top:0;">არმატურა და უკუგათვლა</h3>
+            <h3 style="color: #0288d1; margin-top:0;">არმატურა და უკuგათვლა</h3>
             <div class="calc-group">
                 <div><label>დასახელება</label><input type="text" id="rName" value="არმატურა"></div>
                 <div>
@@ -195,33 +194,36 @@
             <div class="result-box rebar-res">
                 <p>📏 სიგრძე: <b><span id="res-m">10.00</span> მ</b> | ⚖️ წონა: <b><span id="res-kg">8.88</span> კგ</b>
                 </p>
-                <h3 style="color: #c0392b; margin: 10px 0 0 0;">💰 ღირებულება: <span id="rebar-cost">21</span> ₾</h3>
+                <h3 style="color: #c0392b; margin: 5px 0 0 0;">💰 ღირებულება: <span id="rebar-cost">21</span> ₾</h3>
                 <button class="add-btn" style="background:#3498db;" onclick="addToTable('rebar')">სიაში დამატება
                     +</button>
             </div>
         </div>
 
         <div class="card">
-            <h3 style="color: #8e44ad; margin-top:0;">ბლოკის გაანგარიშება 🧱</h3>
+            <h3 style="color: #8e44ad; margin-top:0;">ბლოკის გაანგარიშება (ზომების მიხედვით) 🧱</h3>
             <div class="calc-group">
-                <div><label>ფართობი (მ²)</label><input type="number" id="wallSq" value="10" oninput="calculateBlock()">
-                </div>
+                <div><label>კედლის ფართობი (მ²)</label><input type="number" id="wallSq" value="10"
+                        oninput="calculateBlock()"></div>
                 <div>
-                    <label>ბლოკის ზომა</label>
-                    <select id="blockSize" onchange="calculateBlock()">
-                        <option value="12.5">40 სმ სიგრძე (12.5 ცალი/მ²)</option>
-                        <option value="25">20 სმ სიგრძე (25 ცალი/მ²)</option>
+                    <label>ბლოკის ტიპი</label>
+                    <select id="blockType" onchange="updateBlockPrice()">
+                        <option value="10" data-price="1.10" data-per-m3="125">10x40x20 (1.10₾)</option>
+                        <option value="20" data-price="1.50" data-per-m3="62.5" selected>20x40x20 (1.50₾)</option>
+                        <option value="30" data-price="2.40" data-per-m3="41.6">30x40x20 (2.40₾)</option>
                     </select>
                 </div>
-                <div><label>ფასი (₾)</label><input type="number" id="blockPrice" value="1.50"
+                <div><label>ბლოკის ფასი (₾)</label><input type="number" id="blockPrice" value="1.50"
                         oninput="calculateBlock()"></div>
                 <div><label>გამოსაკლები (მ²)</label><input type="number" id="minusSq" value="0"
                         oninput="calculateBlock()"></div>
             </div>
             <div class="result-box block-res">
-                <p>🧱 საჭირო რაოდენობა: <b><span id="res-blocks">125</span> ცალი</b></p>
-                <p>📏 სუფთა ფართობი: <b><span id="net-sq">10.00</span> მ²</b></p>
-                <h3 style="color: #c0392b; margin: 10px 0 0 0;">💰 ღირებულება: <span id="block-cost">188</span> ₾</h3>
+                <p>🧱 რაოდენობა: <b><span id="res-blocks">125</span> ცალი</b> | 📐 მოცულობა: <b><span
+                            id="block-m3">2.00</span> მ³</b></p>
+                <p>🥣 დუღაბი: ცემენტი ~<b><span id="block-cem">56</span> კგ</b> | ქვიშა ~<b><span
+                            id="block-sand">0.15</span> მ³</b></p>
+                <h3 style="color: #c0392b; margin: 5px 0 0 0;">💰 ღირებულება: <span id="block-cost">188</span> ₾</h3>
                 <button class="add-btn" style="background:#8e44ad;" onclick="addToTable('block')">სიაში დამატება
                     +</button>
             </div>
@@ -259,23 +261,26 @@
 
         let totalSum = 0;
 
+        function updateBlockPrice() {
+            let select = document.getElementById('blockType');
+            let price = select.options[select.selectedIndex].getAttribute('data-price');
+            document.getElementById('blockPrice').value = price;
+            calculateBlock();
+        }
+
         function calculateAll() {
-            let l = parseFloat(document.getElementById('L').value) || 0;
-            let w = parseFloat(document.getElementById('W').value) || 0;
-            let h = parseFloat(document.getElementById('H').value) || 0;
+            // ბეტონი
+            let l = parseFloat(document.getElementById('L').value) || 0, w = parseFloat(document.getElementById('W').value) || 0, h = parseFloat(document.getElementById('H').value) || 0;
             let vol = l * w * h;
             document.getElementById('sq-res').innerText = (l * w).toFixed(2);
             document.getElementById('vol-res').innerText = vol.toFixed(2);
             document.getElementById('cem-kg-res').innerText = (vol * 370).toFixed(1);
-            document.getElementById('sand-res').innerText = (vol * 0.5).toFixed(2);
-            document.getElementById('stone-res').innerText = (vol * 0.7).toFixed(2);
             document.getElementById('agg-res').innerText = (vol * 1.2).toFixed(2);
             document.getElementById('price-res').innerText = Math.round(vol * 180);
 
-            let coeff = parseFloat(document.getElementById('dia').value);
-            let m = parseFloat(document.getElementById('rebarL').value) || 0;
+            // არმატურა
+            let coeff = parseFloat(document.getElementById('dia').value), m = parseFloat(document.getElementById('rebarL').value) || 0, tp = parseFloat(document.getElementById('tonPrice').value) || 0;
             let kg = m * coeff;
-            let tp = parseFloat(document.getElementById('tonPrice').value) || 0;
             document.getElementById('res-m').innerText = m.toFixed(2);
             document.getElementById('res-kg').innerText = kg.toFixed(2);
             document.getElementById('rebarKG').value = kg.toFixed(2);
@@ -284,10 +289,8 @@
         }
 
         function calculateReverse() {
-            let coeff = parseFloat(document.getElementById('dia').value);
-            let kg = parseFloat(document.getElementById('rebarKG').value) || 0;
+            let coeff = parseFloat(document.getElementById('dia').value), kg = parseFloat(document.getElementById('rebarKG').value) || 0, tp = parseFloat(document.getElementById('tonPrice').value) || 0;
             let m = kg / coeff;
-            let tp = parseFloat(document.getElementById('tonPrice').value) || 0;
             document.getElementById('res-m').innerText = m.toFixed(2);
             document.getElementById('res-kg').innerText = kg.toFixed(2);
             document.getElementById('rebarL').value = m.toFixed(2);
@@ -297,13 +300,21 @@
         function calculateBlock() {
             let wallSq = parseFloat(document.getElementById('wallSq').value) || 0;
             let minusSq = parseFloat(document.getElementById('minusSq').value) || 0;
-            let perSq = parseFloat(document.getElementById('blockSize').value);
-            let bPrice = parseFloat(document.getElementById('blockPrice').value) || 0;
             let netSq = Math.max(0, wallSq - minusSq);
-            let totalBlocks = Math.ceil(netSq * perSq);
+            let bWidth = parseInt(document.getElementById('blockType').value) / 100;
+            let totalBlocks = Math.ceil(netSq * 12.5);
+            let totalM3 = netSq * bWidth;
+            let bPrice = parseFloat(document.getElementById('blockPrice').value) || 0;
+
             document.getElementById('net-sq').innerText = netSq.toFixed(2);
             document.getElementById('res-blocks').innerText = totalBlocks;
+            document.getElementById('block-m3').innerText = totalM3.toFixed(2);
             document.getElementById('block-cost').innerText = Math.round(totalBlocks * bPrice);
+
+            // დუღაბის მიახლოებითი ხარჯი (ცემენტი 280კგ/მ3 ხსნარზე)
+            let mortarVol = totalM3 * 0.07; // საშუალოდ 7% დუღაბი მოცულობაში
+            document.getElementById('block-cem').innerText = Math.round(mortarVol * 400);
+            document.getElementById('block-sand').innerText = mortarVol.toFixed(2);
         }
 
         function addToTable(type) {
@@ -319,8 +330,8 @@
                 info = document.getElementById('res-kg').innerText + " კგ არმატურა";
                 price = parseInt(document.getElementById('rebar-cost').innerText);
             } else if (type === 'block') {
-                name = "ბლოკის წყობა";
-                info = document.getElementById('res-blocks').innerText + " ცალი ბლოკი";
+                name = "ბლოკის წყობა (" + document.getElementById('blockType').value + "სმ)";
+                info = document.getElementById('res-blocks').innerText + " ცალი / " + document.getElementById('block-m3').innerText + " მ³";
                 price = parseInt(document.getElementById('block-cost').innerText);
             }
             row.innerHTML = `<td>${name}</td><td>${info}</td><td>${price}</td><td><button style="color:red; cursor:pointer; border:none; background:none; font-weight:bold;" onclick="removeRow(this, ${price})">✕</button></td>`;

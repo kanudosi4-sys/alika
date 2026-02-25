@@ -192,11 +192,11 @@
                 <div><label>ტონის ფასი (₾)</label><input type="number" id="rPrice" value="2400" oninput="calc()"></div>
             </div>
             <div class="res-box" style="border-left-color: #2980b9;">
-                <div class="mat-row"><span>სიგრძე: <span id="rLen">0</span> გრძ.მ</span></div>
+                <div class="mat-row"><span>გამოთვლილი სიგრძე:</span> <span><span id="rLen">0</span> გრძ.მ</span></div>
                 <div class="total-line">
-                    <div style="font-size: 13px;">ჯამი: <span id="rTotalSum">0</span> ₾</div>
+                    <span>ჯამი: <span id="rSum">0</span> ₾</span>
                     <button class="add-btn" style="background:#2980b9"
-                        onclick="add('არმატურა', 'rKG', 'rTotalSum', '0', 'კგ')">დამატება</button>
+                        onclick="add('არმატურა', 'rKG', 'rSum', '0', 'კგ')">დამატება</button>
                 </div>
             </div>
         </div>
@@ -214,12 +214,12 @@
                 <div><label>ხელობა (1მ³)</label><input type="number" id="cWP" value="170" oninput="calc()"></div>
             </div>
             <div class="res-box" style="border-left-color: #e67e22;">
-                <div class="mat-row"><span>ცემენტი:</span> <span><span id="c_cem">0</span> კგ</span></div>
-                <div class="mat-row"><span>ქვიშა:</span> <span><span id="c_sand">0</span> კგ</span></div>
-                <div class="mat-row"><span>ღორღი:</span> <span><span id="c_grav">0</span> კგ</span></div>
+                <div class="mat-row"><span>ცემენტი: <span id="c_cem">0</span> კგ</span></div>
+                <div class="mat-row"><span>ქვიშა: <span id="c_sand">0</span> კგ</span></div>
+                <div class="mat-row"><span>ღორღი: <span id="c_grav">0</span> კგ</span></div>
                 <div class="total-line">
-                    <div style="font-size: 13px;">მასალა: <span id="cMatSum">0</span> ₾ | ხელობა: <span
-                            id="cWorkSum">0</span> ₾</div>
+                    <div style="font-size: 13px;">მასალა: <span id="cMatSum">0</span> | ხელობა: <span
+                            id="cWorkSum">0</span></div>
                     <button class="add-btn" style="background:#e67e22"
                         onclick="add('ბეტონი', 'cV', 'cMatSum', 'cWorkSum', 'მ³')">დამატება</button>
                 </div>
@@ -235,12 +235,12 @@
                 <div><label>ხელობა (ცალი)</label><input type="number" id="bWork" value="1.50" oninput="calc()"></div>
             </div>
             <div class="res-box" style="border-left-color: #8e44ad;">
-                <div class="mat-row"><span>ბლოკის რაოდენობა:</span> <span><span id="bCount">0</span> ცალი</span></div>
-                <div class="mat-row"><span>ცემენტი (წყობის):</span> <span><span id="bCem">0</span> კგ</span></div>
-                <div class="mat-row"><span>ქვიშა (წყობის):</span> <span><span id="bSand">0</span> მ³</span></div>
+                <div class="mat-row"><span>რაოდენობა: <span id="bCount">0</span> ც</span> | <span>ცემენტი: <span
+                            id="bCem">0</span> კგ</span></div>
+                <div class="mat-row"><span>ქვიშა (წყობის): <span id="bSand">0</span> მ³</span></div>
                 <div class="total-line">
-                    <div style="font-size: 13px;">მასალა: <span id="bMatSum">0</span> ₾ | ხელობა: <span
-                            id="bWorkSum">0</span> ₾</div>
+                    <div style="font-size: 13px;">მასალა: <span id="bMatSum">0</span> | ხელობა: <span
+                            id="bWorkSum">0</span></div>
                     <button class="add-btn" style="background:#8e44ad"
                         onclick="add('ბლოკი', 'bS', 'bMatSum', 'bWorkSum', 'მ²')">დამატება</button>
                 </div>
@@ -255,11 +255,11 @@
                 <div><label>ხელობა (1მ²)</label><input type="number" id="pWork" value="20" oninput="calc()"></div>
             </div>
             <div class="res-box" style="border-left-color: #27ae60;">
-                <div class="mat-row"><span>ცემენტი:</span> <span><span id="pCem">0</span> კგ</span></div>
-                <div class="mat-row"><span>ქვიშა:</span> <span><span id="pSand">0</span> მ³</span></div>
+                <div class="mat-row"><span>ცემენტი: <span id="pCem">0</span> კგ</span> | <span>ქვიშა: <span
+                            id="pSand">0</span> მ³</span></div>
                 <div class="total-line">
-                    <div style="font-size: 13px;">მასალა: <span id="pMatSum">0</span> ₾ | ხელობა: <span
-                            id="pWorkSum">0</span> ₾</div>
+                    <div style="font-size: 13px;">მასალა: <span id="pMatSum">0</span> | ხელობა: <span
+                            id="pWorkSum">0</span></div>
                     <button class="add-btn" style="background:#27ae60"
                         onclick="add('ლესვა', 'pS', 'pMatSum', 'pWorkSum', 'მ²')">დამატება</button>
                 </div>
@@ -274,11 +274,11 @@
                 <div><label>ხელობა (1მ²)</label><input type="number" id="fWorkP" value="12" oninput="calc()"></div>
             </div>
             <div class="res-box" style="border-left-color: #16a085;">
-                <div class="mat-row"><span>ცემენტი (250კგ/მ³):</span> <span><span id="fCemQty">0</span> კგ</span></div>
-                <div class="mat-row"><span>ქვიშა (კოეფ. 1.2):</span> <span><span id="fSandQty">0</span> მ³</span></div>
+                <div class="mat-row"><span>ცემენტი (250კგ/მ³): <span id="fCemQty">0</span> კგ</span></div>
+                <div class="mat-row"><span>ქვიშა (1.2 კოეფ.): <span id="fSandQty">0</span> მ³</span></div>
                 <div class="total-line">
-                    <div style="font-size: 13px;">მასალა: <span id="fMatSum">0</span> ₾ | ხელობა: <span
-                            id="fWorkSum">0</span> ₾</div>
+                    <div style="font-size: 13px;">მასალა: <span id="fMatSum">0</span> | ხელობა: <span
+                            id="fWorkSum">0</span></div>
                     <button class="add-btn" style="background:#16a085"
                         onclick="add('მოჭიმვა', 'fS', 'fMatSum', 'fWorkSum', 'მ²')">დამატება</button>
                 </div>
@@ -289,7 +289,7 @@
             <h3 style="color:#2980b9; margin-top:0;">🪟 კარ-ფანჯარა (მ²)</h3>
             <div class="grid">
                 <div><label>ფართობი (მ²)</label><input type="number" id="wS" value="10" oninput="calc()"></div>
-                <div><label>ტიპი (ფასი+მონტაჟი)</label>
+                <div><label>ტიპი (ფასი მონტაჟით)</label>
                     <select id="wType" onchange="calc()">
                         <option value="216">თეთრი მეტალოპლასტმასი (216₾)</option>
                         <option value="245">ფერადი მეტალოპლასტმასი (245₾)</option>
@@ -300,7 +300,7 @@
             </div>
             <div class="res-box" style="border-left-color: #2980b9;">
                 <div class="total-line">
-                    <div style="font-size: 13px;">ჯამი: <span id="wTotalSum">0</span> ₾</div>
+                    <span>ჯამი: <span id="wTotalSum">0</span> ₾</span>
                     <button class="add-btn" style="background:#2980b9"
                         onclick="add('კარ-ფანჯარა', 'wS', 'wTotalSum', '0', 'მ²')">დამატება</button>
                 </div>
@@ -308,20 +308,20 @@
         </div>
 
         <div class="card no-print">
-            <h3 style="color:#c0392b; margin-top:0;">🚪 ლითონის კარი</h3>
+            <h3 style="color:#c0392b; margin-top:0;">🚪 ლითონის კარი (ცალი)</h3>
             <div class="grid">
                 <div><label>რაოდენობა (ცალი)</label><input type="number" id="dQty" value="1" oninput="calc()"></div>
-                <div><label>ხარისხი</label>
+                <div><label>ხარისხი (ფასი მონტაჟით)</label>
                     <select id="dType" onchange="calc()">
                         <option value="900">უბრალო (900₾)</option>
                         <option value="1200">საშუალო (1200₾)</option>
-                        <option value="1650">მაღალი (1650₾)</option>
+                        <option value="1650">მაღალი ხარისხის (1650₾)</option>
                     </select>
                 </div>
             </div>
             <div class="res-box" style="border-left-color: #c0392b;">
                 <div class="total-line">
-                    <div style="font-size: 13px;">ჯამი: <span id="dTotalSum">0</span> ₾</div>
+                    <span>ჯამი: <span id="dTotalSum">0</span> ₾</span>
                     <button class="add-btn" style="background:#c0392b"
                         onclick="add('ლითონის კარი', 'dQty', 'dTotalSum', '0', 'ცალი')">დამატება</button>
                 </div>
@@ -329,7 +329,7 @@
         </div>
 
         <div class="card">
-            <h3 style="margin-top:0;">📊 დაანგარიშების რეესტრი</h3>
+            <h3>📊 დაანგარიშების რეესტრი</h3>
             <table id="mainTable">
                 <thead>
                     <tr>
@@ -346,7 +346,7 @@
             <div class="grand-total">სულ გადასახდელი: <span id="grand">0</span> ₾</div>
             <button class="no-print" onclick="window.print()"
                 style="width:100%; padding:15px; margin-top:15px; cursor:pointer; font-weight:bold; background:#2c3e50; color:white; border:none; border-radius:6px; font-size:16px;">🖨️
-                დოკუმენტის ბეჭდვა</button>
+                ბეჭდვა</button>
         </div>
     </div>
 
@@ -355,83 +355,16 @@
         setInterval(updateClock, 1000);
 
         function calc() {
-            // არმატურა
+            // 1. არმატურა
             let rd = parseFloat(document.getElementById('rDia').value);
             let rk = parseFloat(document.getElementById('rKG').value) || 0;
             let rp = parseFloat(document.getElementById('rPrice').value) || 0;
             document.getElementById('rLen').innerText = (rk / rd).toFixed(1);
-            document.getElementById('rTotalSum').innerText = Math.round((rk / 1000) * rp);
+            document.getElementById('rSum').innerText = Math.round((rk / 1000) * rp);
 
-            // ბეტონი
+            // 2. ბეტონი (შენი ფორმულით)
             let cv = parseFloat(document.getElementById('cV').value) || 0;
             let cS = document.getElementById('cMark');
             let sel = cS.options[cS.selectedIndex];
             let cK = parseFloat(sel.value), sK = parseFloat(sel.getAttribute('data-sand')), gK = parseFloat(sel.getAttribute('data-grav'));
-            document.getElementById('c_cem').innerText = Math.round(cv * cK);
-            document.getElementById('c_sand').innerText = Math.round(cv * sK);
-            document.getElementById('c_grav').innerText = Math.round(cv * gK);
-            let mCP = (cK * 0.32) + (sK * 0.06) + (gK * 0.032);
-            document.getElementById('cMatSum').innerText = Math.round(cv * mCP);
-            document.getElementById('cWorkSum').innerText = Math.round(cv * parseFloat(document.getElementById('cWP').value));
-
-            // ბლოკი
-            let bs = parseFloat(document.getElementById('bS').value) || 0;
-            let bc = Math.ceil(bs * 12.5);
-            document.getElementById('bCount').innerText = bc;
-            let bCem = bc * 1.2; document.getElementById('bCem').innerText = Math.round(bCem);
-            let bSand = bc * 0.003; document.getElementById('bSand').innerText = bSand.toFixed(2);
-            document.getElementById('bMatSum').innerText = Math.round((bc * parseFloat(document.getElementById('bPrice').value)) + (bCem * 0.32) + (bSand * 60));
-            document.getElementById('bWorkSum').innerText = Math.round(bc * parseFloat(document.getElementById('bWork').value));
-
-            // ლესვა
-            let ps = parseFloat(document.getElementById('pS').value) || 0;
-            let pt = parseFloat(document.getElementById('pThick').value) || 0;
-            let pCem = ps * pt * 3.6; document.getElementById('pCem').innerText = Math.round(pCem);
-            let pSand = ps * pt * 0.012; document.getElementById('pSand').innerText = pSand.toFixed(2);
-            document.getElementById('pMatSum').innerText = Math.round((pCem * 0.32) + (pSand * 60));
-            document.getElementById('pWorkSum').innerText = Math.round(ps * parseFloat(document.getElementById('pWork').value));
-
-            // სტიაშკა
-            let fs = parseFloat(document.getElementById('fS').value) || 0;
-            let ft = parseFloat(document.getElementById('fThick').value) || 0;
-            let fVol = (fs * ft) / 100;
-            let fCem = fVol * 250;
-            let fSand = fVol * 1.2;
-            document.getElementById('fCemQty').innerText = Math.round(fCem);
-            document.getElementById('fSandQty').innerText = fSand.toFixed(1);
-            document.getElementById('fMatSum').innerText = Math.round((fCem * 0.32) + (fSand * 60));
-            document.getElementById('fWorkSum').innerText = Math.round(fs * parseFloat(document.getElementById('fWorkP').value));
-
-            // ფანჯარა
-            let ws = parseFloat(document.getElementById('wS').value) || 0;
-            let wp = parseFloat(document.getElementById('wType').value);
-            document.getElementById('wTotalSum').innerText = Math.round(ws * wp);
-
-            // კარი
-            let dq = parseFloat(document.getElementById('dQty').value) || 0;
-            let dp = parseFloat(document.getElementById('dType').value);
-            document.getElementById('dTotalSum').innerText = Math.round(dq * dp);
-        }
-
-        function add(name, qtyId, matSumId, workSumId, unit) {
-            let q = document.getElementById(qtyId).value;
-            let m = parseInt(document.getElementById(matSumId).innerText);
-            let w = workSumId === '0' ? 0 : parseInt(document.getElementById(workSumId).innerText);
-            let total = m + w;
-            document.getElementById('list').innerHTML += `<tr><td><b>${name}</b></td><td>${q} ${unit}</td><td>${m} ₾</td><td>${w} ₾</td><td><b>${total} ₾</b></td><td class="no-print" onclick="this.parentElement.remove(); updateTotals();" style="color:red; cursor:pointer;">✕</td></tr>`;
-            updateTotals();
-        }
-
-        function updateTotals() {
-            let rows = document.getElementById('list').rows;
-            let current = 0;
-            for (let i = 0; i < rows.length; i++) {
-                current += parseInt(rows[i].cells[4].innerText);
-            }
-            document.getElementById('grand').innerText = current;
-        }
-        window.onload = calc;
-    </script>
-</body>
-
-</html>
+            document.getElementById('c_

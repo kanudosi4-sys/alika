@@ -187,8 +187,8 @@
                         <option value="3.85">25 მმ</option>
                     </select>
                 </div>
-                <div><label>წონა (კგ)</label><input type="number" id="rKG_input" value="100" oninput="calc()"></div>
-                <div><label>1 ტონის ფასი (₾)</label><input type="number" id="rPriceT" value="2400" oninput="calc()">
+                <div><label>წონა (კგ)</label><input type="number" id="rKG_input" value="1000" oninput="calc()"></div>
+                <div><label>1 ტონის ფასი (₾)</label><input type="number" id="rPriceT" value="2100" oninput="calc()">
                 </div>
             </div>
             <div class="res-box">
@@ -235,10 +235,10 @@
             <div class="grid">
                 <div><label>ფართობი (მ²)</label><input type="number" id="bS" value="10" oninput="calc()"></div>
                 <div><label>ზომა</label>
-                    <select id="bSize" onchange="calc()">
-                        <option value="1.20">10-იანი</option>
-                        <option value="1.60" selected>20-იანი</option>
-                        <option value="2.10">30-იანი</option>
+                    <select id="bSize" onchange="updateBlockPrice(); calc();">
+                        <option value="10" data-p="1.10">10-იანი</option>
+                        <option value="20" data-p="1.60" selected>20-იანი</option>
+                        <option value="30" data-p="2.40">30-იანი</option>
                     </select>
                 </div>
                 <div><label>ბლოკის ფასი</label><input type="number" id="bPrice" value="1.60" oninput="calc()"></div>
@@ -348,6 +348,12 @@
     <script>
         function updateClock() { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }
         setInterval(updateClock, 1000);
+
+        function updateBlockPrice() {
+            let bS = document.getElementById('bSize');
+            let sel = bS.options[bS.selectedIndex];
+            document.getElementById('bPrice').value = sel.getAttribute('data-p');
+        }
 
         function calc() {
             // არმატურა

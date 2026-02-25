@@ -257,16 +257,16 @@
             <div class="grid">
                 <div><label>ფართობი (მ²)</label><input type="number" id="rfS" value="100" oninput="calc()"></div>
                 <div><label>ხის ფასი (1მ³)</label><input type="number" id="rfWoodP" value="900" oninput="calc()"></div>
-                <div><label>თუნუქი+წვრილ. (1მ²)</label><input type="number" id="rfTinP" value="23" oninput="calc()">
+                <div><label>თუნუქი+წვრილ. (1მ²)</label><input type="number" id="rfTinP" value="18.60" oninput="calc()">
                 </div>
-                <div><label>ხელობა (1მ²)</label><input type="number" id="rfWorkP" value="45" oninput="calc()"></div>
+                <div><label>ხელობა (1მ²)</label><input type="number" id="rfWorkP" value="40" oninput="calc()"></div>
             </div>
             <div class="res-box" style="border-left-color: #c0392b;">
-                <div class="mat-row"><span>ხის მასალა (0.08 მ³ კვ-ზე):</span> <span><span id="rfWoodRes">8</span>
+                <div class="mat-row"><span>ხის მასალა (0.06 მ³ კვ-ზე):</span> <span><span id="rfWoodRes">6</span>
                         მ³</span></div>
                 <div class="total-line">
-                    <div style="font-size: 13px;">მასალა: <span id="rfMatSum">9500</span> ₾ | ხელობა: <span
-                            id="rfWorkSum">4500</span> ₾</div>
+                    <div style="font-size: 13px;">მასალა: <span id="rfMatSum">7260</span> ₾ | ხელობა: <span
+                            id="rfWorkSum">4000</span> ₾</div>
                     <button class="add-btn" style="background:#c0392b"
                         onclick="add('სახურავი', 'rfS', 'rfMatSum', 'rfWorkSum', 'მ²')">დამატება</button>
                 </div>
@@ -318,42 +318,42 @@
 
         function calc() {
             // არმატურა
-            let weightPerM = parseFloat(document.getElementById('rDia').value);
-            let kg_input = parseFloat(document.getElementById('rKG_input').value) || 0;
-            let pricePerT = parseFloat(document.getElementById('rPriceT').value) || 0;
-            document.getElementById('rLen_res').innerText = (kg_input / weightPerM).toFixed(1);
-            document.getElementById('rSum').innerText = Math.round((kg_input / 1000) * pricePerT);
+            let r_w = parseFloat(document.getElementById('rDia').value);
+            let r_k = parseFloat(document.getElementById('rKG_input').value) || 0;
+            let r_p = parseFloat(document.getElementById('rPriceT').value) || 0;
+            document.getElementById('rLen_res').innerText = (r_k / r_w).toFixed(1);
+            document.getElementById('rSum').innerText = Math.round((r_k / 1000) * r_p);
 
             // ბეტონი
             let cv = parseFloat(document.getElementById('cV').value) || 0;
-            let cSelect = document.getElementById('cMark');
-            let sel = cSelect.options[cSelect.selectedIndex];
+            let cS = document.getElementById('cMark');
+            let sel = cS.options[cS.selectedIndex];
             let cK = parseFloat(sel.value), sK = parseFloat(sel.getAttribute('data-sand')), gK = parseFloat(sel.getAttribute('data-grav'));
             document.getElementById('c_cem').innerText = Math.round(cv * cK);
             document.getElementById('c_sand').innerText = Math.round(cv * sK);
             document.getElementById('c_grav').innerText = Math.round(cv * gK);
-            let matCostPerCube = (cK * 0.32) + (sK * 0.06) + (gK * 0.032);
-            document.getElementById('cMatSum').innerText = Math.round(cv * matCostPerCube);
+            let mC = (cK * 0.32) + (sK * 0.06) + (gK * 0.032);
+            document.getElementById('cMatSum').innerText = Math.round(cv * mC);
             document.getElementById('cWorkSum').innerText = Math.round(cv * parseFloat(document.getElementById('cWP').value));
 
             // ბლოკი
             let bs = parseFloat(document.getElementById('bS').value) || 0;
-            let bsize = document.getElementById('bSize').value;
-            let count = Math.ceil(bs * 12.5);
-            let workP = (bsize == "10") ? 1.20 : (bsize == "20" ? 1.50 : 2.00);
-            let matP = (bsize == "10") ? 1.10 : (bsize == "20" ? 1.60 : 2.40);
-            document.getElementById('bWork').value = workP.toFixed(2);
-            document.getElementById('bPrice').value = matP.toFixed(2);
-            document.getElementById('bMatSum').innerText = Math.round(count * matP);
-            document.getElementById('bWorkSum').innerText = Math.round(count * workP);
+            let bz = document.getElementById('bSize').value;
+            let bc = Math.ceil(bs * 12.5);
+            let bW = (bz == "10") ? 1.20 : (bz == "20" ? 1.50 : 2.00);
+            let bM = (bz == "10") ? 1.10 : (bz == "20" ? 1.60 : 2.40);
+            document.getElementById('bWork').value = bW.toFixed(2);
+            document.getElementById('bPrice').value = bM.toFixed(2);
+            document.getElementById('bMatSum').innerText = Math.round(bc * bM);
+            document.getElementById('bWorkSum').innerText = Math.round(bc * bW);
 
-            // სახურავი (ახალი ლოგიკა)
+            // სახურავი (განახლებული კოეფიციენტი 0.06)
             let rfs = parseFloat(document.getElementById('rfS').value) || 0;
-            let woodVol = rfs * 0.08; // 0.08 მ3 კვადრატზე
-            document.getElementById('rfWoodRes').innerText = woodVol.toFixed(2);
-            let woodTotal = woodVol * parseFloat(document.getElementById('rfWoodP').value);
-            let tinTotal = rfs * parseFloat(document.getElementById('rfTinP').value);
-            document.getElementById('rfMatSum').innerText = Math.round(woodTotal + tinTotal);
+            let wV = rfs * 0.06; // აქ შეიცვალა 0.08-დან 0.06-ზე
+            document.getElementById('rfWoodRes').innerText = wV.toFixed(2);
+            let wT = wV * parseFloat(document.getElementById('rfWoodP').value);
+            let tT = rfs * parseFloat(document.getElementById('rfTinP').value);
+            document.getElementById('rfMatSum').innerText = Math.round(wT + tT);
             document.getElementById('rfWorkSum').innerText = Math.round(rfs * parseFloat(document.getElementById('rfWorkP').value));
 
             // ლესვა
@@ -362,24 +362,22 @@
             document.getElementById('pWorkSum').innerText = Math.round(ps * parseFloat(document.getElementById('pWork').value));
         }
 
-        let itemsTotal = 0;
         function add(name, qtyId, matSumId, workSumId, unit) {
             let q = document.getElementById(qtyId).value;
-            let mat = parseInt(document.getElementById(matSumId).innerText) || 0;
-            let work = workSumId === '0' ? 0 : (parseInt(document.getElementById(workSumId).innerText) || 0);
-            let rowSum = mat + work;
-            document.getElementById('list').innerHTML += `<tr><td><b>${name}</b></td><td>${q} ${unit}</td><td>${mat} ₾</td><td>${work} ₾</td><td><b>${rowSum} ₾</b></td><td class="no-print" onclick="this.parentElement.remove(); updateTotals();" style="color:red; cursor:pointer; font-weight:bold; text-align:center;">✕</td></tr>`;
+            let m = parseInt(document.getElementById(matSumId).innerText) || 0;
+            let w = workSumId === '0' ? 0 : (parseInt(document.getElementById(workSumId).innerText) || 0);
+            let s = m + w;
+            document.getElementById('list').innerHTML += `<tr><td><b>${name}</b></td><td>${q} ${unit}</td><td>${m} ₾</td><td>${w} ₾</td><td><b>${s} ₾</b></td><td class="no-print" onclick="this.parentElement.remove(); updateTotals();" style="color:red; cursor:pointer; font-weight:bold; text-align:center;">✕</td></tr>`;
             updateTotals();
         }
 
         function updateTotals() {
             let rows = document.getElementById('list').rows;
-            let currentTotal = 0;
+            let t = 0;
             for (let i = 0; i < rows.length; i++) {
-                currentTotal += parseInt(rows[i].cells[4].innerText);
+                t += parseInt(rows[i].cells[4].innerText);
             }
-            itemsTotal = currentTotal;
-            document.getElementById('grand').innerText = itemsTotal + (parseInt(document.getElementById('transport').value) || 0);
+            document.getElementById('grand').innerText = t + (parseInt(document.getElementById('transport').value) || 0);
         }
         window.onload = calc;
     </script>

@@ -307,9 +307,11 @@
                 <div><label>ხელობა (1მ²)</label><input type="number" id="fWorkP" value="12" oninput="calc()"></div>
             </div>
             <div class="res-box" style="border-left-color: #16a085;">
-                <div class="mat-row"><span>საჭირო ქვიშა:</span> <span><span id="fSandQty">5</span> მ³</span></div>
+                <div class="mat-row"><span>ცემენტი (250კგ/მ³):</span> <span><span id="fCemQty">125</span> კგ</span>
+                </div>
+                <div class="mat-row"><span>ქვიშა:</span> <span><span id="fSandQty">5.0</span> მ³</span></div>
                 <div class="total-line">
-                    <div style="font-size: 13px;">მასალა: <span id="fMatSum">450</span> ₾ | ხელობა: <span
+                    <div style="font-size: 13px;">მასალა: <span id="fMatSum">500</span> ₾ | ხელობა: <span
                             id="fWorkSum">1200</span> ₾</div>
                     <button class="add-btn" style="background:#16a085"
                         onclick="add('მოჭიმვა', 'fS', 'fMatSum', 'fWorkSum', 'მ²')">დამატება</button>
@@ -362,3 +364,77 @@
             document.getElementById('c_cem').innerText = Math.round(cv * cK);
             document.getElementById('c_sand').innerText = Math.round(cv * sK);
             document.getElementById('c_grav').innerText = Math.round(cv * gK);
+            let mCP = (cK * 0.32) + (sK * 0.06) + (gK * 0.032);
+            document.getElementById('cMatSum').innerText = Math.round(cv * mCP);
+            document.getElementById('cWorkSum').innerText = Math.round(cv * parseFloat(document.getElementById('cWP').value));
+
+            // ბლოკი
+            let bs = parseFloat(document.getElementById('bS').value) || 0;
+            let bz = document.getElementById('bSize').value;
+            let bc = Math.ceil(bs * 12.5);
+            document.getElementById('bCount').innerText = bc;
+            let bWp = (bz == "10") ? 1.20 : (bz == "20" ? 1.50 : 2.00);
+            let bMp = (bz == "10") ? 1.10 : (bz == "20" ? 1.60 : 2.40);
+            document.getElementById('bMatSum').innerText = Math.round(bc * bMp);
+            document.getElementById('bWorkSum').innerText = Math.round(bc * bWp);
+
+            // ლესვა
+            let ps = parseFloat(document.getElementById('pS').value) || 0;
+            let pt = parseFloat(document.getElementById('pThick').value);
+            document.getElementById('pCem').innerText = Math.round(ps * pt * 3.6);
+            document.getElementById('pMatSum').innerText = Math.round(ps * (pt / 2.5 * 6));
+            document.getElementById('pWorkSum').innerText = Math.round(ps * parseFloat(document.getElementById('pWork').value));
+
+            // სახურავი
+            let rfs = parseFloat(document.getElementById('rfS').value) || 0;
+            let rfWq = rfs * 0.06;
+            document.getElementById('rfWoodQty').innerText = rfWq.toFixed(2);
+            let rfMc = (rfWq * parseFloat(document.getElementById('rfWoodP').value)) + (rfs * parseFloat(document.getElementById('rfTinP').value));
+            document.getElementById('rfMatSum').innerText = Math.round(rfMc);
+            document.getElementById('rfWorkSum').innerText = Math.round(rfs * parseFloat(document.getElementById('rfWorkP').value));
+
+            // იატაკის მოჭიმვა (სტიაშკა)
+            let fs = parseFloat(document.getElementById('fS').value) || 0;
+            let ft = parseFloat(document.getElementById('fThick').value) || 0;
+            let fVolume = (fs * ft) / 100; // კუბური მეტრი
+            let fCem = fVolume * 250; // 250კგ 1მ3-ზე
+            let fSand = fVolume; // ქვიშა მოცულობით
+
+            document.getElementById('fCemQty').innerText = Math.round(fCem);
+            document.getElementById('fSandQty').innerText = fSand.toFixed(1);
+
+            // მასალის ფასი: ცემენტი (0.32ლ/კგ) + ქვიშა (60ლ/მ3)
+            let fMatCost = (fCem * 0.32) + (fSand * 60);
+            document.getElementById('fMatSum').innerText = Math.round(fMatCost);
+            document.getElementById('fWorkSum').innerText = Math.round(fs * parseFloat(document.getElementById('fWorkP').value));
+        }
+
+        let itemsTotal = 0;
+        function add(name, qtyId, matSumId, workSumId, unit) {
+            let q = document.getElementById(qtyId).value;
+            let mat = parseInt(document.getElementById(matSumId).innerText) || 0;
+            let work = workSumId === '0' ? 0 : (parseInt(document.getElementById(workSumId).innerText) || 0);
+            let rowSum = mat + work;
+            document.getElementById('list').innerHTML += `<tr><td><b>${name}</b></td><td>${q} ${unit}</td><td>${mat} ₾</td><td>${work} ₾</td><td><b>${rowSum} ₾</b></td><td class="no-print" onclick="this.parentElement.remove(); updateTotals();" style="color:red; cursor:pointer;">✕</td></tr>`;
+            updateTotals();
+        }
+
+        function updateTotals() {
+            let rows = document.getElementById('list').rows;
+            let currentTotal = 0;
+            for (let i = 0; i < rows.length; i++) {
+                currentTotal += parseInt(rows[i].cells[4].innerText.replace(' ₾', ''));
+            }
+            itemsTotal = currentTotal;
+            updateGrand();
+        }
+
+        function updateGrand() {
+            let trans = parseInt(document.getElementById('transport').value) || 0;
+            document.getElementById('grand').innerText = itemsTotal + trans;
+        }
+        window.onload = calc;
+    </script>
+</body>
+
+</html>

@@ -290,6 +290,25 @@
         </div>
 
         <div class="card no-print">
+            <h3 style="color:#7f8c8d; margin-top:0;">🌑 რბილი გადახურვა (ბიტუმი)</h3>
+            <div class="grid">
+                <div><label>ფართობი (მ²)</label><input type="number" id="rbS" value="100" oninput="calc()"></div>
+                <div><label>მასალის ჯამი (1მ²)</label><input type="number" id="rbMatP" value="16" oninput="calc()">
+                </div>
+                <div><label>შრომა (1მ²)</label><input type="number" id="rbWorkP" value="12" oninput="calc()"></div>
+            </div>
+            <div class="res-box" style="border-left-color: #7f8c8d;">
+                <div class="mat-row"><span>პრაიმერი (1₾) + ქვედა (7₾) + ზედა (8₾)</span></div>
+                <div class="total-line">
+                    <div style="font-size: 13px;">მასალა: <span id="rbMatSum">0</span> ₾ | ხელობა: <span
+                            id="rbWorkSum">0</span> ₾</div>
+                    <button class="add-btn" style="background:#7f8c8d"
+                        onclick="add('რბილი გადახურვა', 'rbS', 'rbMatSum', 'rbWorkSum', 'მ²')">დამატება</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card no-print">
             <h3 style="color:#27ae60; margin-top:0;">📐 ლესვა</h3>
             <div class="grid">
                 <div><label>ფართობი (მ²)</label><input type="number" id="pS" value="50" oninput="calc()"></div>
@@ -315,7 +334,7 @@
         </div>
 
         <div class="card no-print">
-            <h3 style="color:#c0392b; margin-top:0;">🏠 სახურავი</h3>
+            <h3 style="color:#c0392b; margin-top:0;">🏠 სახურავი (თუნუქი)</h3>
             <div class="grid">
                 <div><label>ფართობი (მ²)</label><input type="number" id="rfS" value="100" oninput="calc()"></div>
                 <div><label>ხის ფასი (1მ³)</label><input type="number" id="rfWoodP" value="900" oninput="calc()"></div>
@@ -328,7 +347,7 @@
                     <div style="font-size: 13px;">მასალა: <span id="rfMatSum">0</span> ₾ | ხელობა: <span
                             id="rfWorkSum">0</span> ₾</div>
                     <button class="add-btn" style="background:#c0392b"
-                        onclick="add('სახურავი', 'rfS', 'rfMatSum', 'rfWorkSum', 'მ²')">დამატება</button>
+                        onclick="add('თუნუქის სახურავი', 'rfS', 'rfMatSum', 'rfWorkSum', 'მ²')">დამატება</button>
                 </div>
             </div>
         </div>
@@ -426,6 +445,13 @@
             document.getElementById('bMatSum').innerText = Math.round((bc * bMp) + (bCem * 0.32) + (bSand * 60));
             document.getElementById('bWorkSum').innerText = Math.round(bc * bWp);
 
+            // რბილი გადახურვა
+            let rbs = parseFloat(document.getElementById('rbS').value) || 0;
+            let rbmp = parseFloat(document.getElementById('rbMatP').value) || 0;
+            let rbwp = parseFloat(document.getElementById('rbWorkP').value) || 0;
+            document.getElementById('rbMatSum').innerText = Math.round(rbs * rbmp);
+            document.getElementById('rbWorkSum').innerText = Math.round(rbs * rbwp);
+
             // კარ-ფანჯარა
             let wdQ = parseFloat(document.getElementById('wdQty').value) || 0;
             let wdP = parseFloat(document.getElementById('wdPrice').value) || 0;
@@ -439,7 +465,7 @@
             document.getElementById('pMatSum').innerText = Math.round((pCem * 0.32) + (pSand * 60));
             document.getElementById('pWorkSum').innerText = Math.round(ps * parseFloat(document.getElementById('pWork').value));
 
-            // სახურავი
+            // სახურავი (თუნუქი)
             let rfs = parseFloat(document.getElementById('rfS').value) || 0;
             let rfWq = rfs * 0.06;
             document.getElementById('rfWoodQty').innerText = rfWq.toFixed(2);
@@ -476,7 +502,6 @@
             let unit = document.getElementById('wdLabel').innerText.includes("ცალი") ? "ცალი" : "მ²";
             let qty = document.getElementById('wdQty').value;
             let total = parseInt(document.getElementById('wdSum').innerText);
-            // კარ-ფანჯარაში მასალა და ხელობა ერთადაა, ამიტომ მასალაში ვწერ მთლიან ფასს, ხელობაში - 0
             document.getElementById('list').innerHTML += `<tr><td><b>${name}</b></td><td>${qty} ${unit}</td><td>${total} ₾</td><td>0 ₾</td><td><b>${total} ₾</b></td><td class="no-print" onclick="this.parentElement.remove(); updateTotals();" style="color:red; cursor:pointer;">✕</td></tr>`;
             updateTotals();
         }

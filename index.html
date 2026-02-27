@@ -259,31 +259,22 @@
         </div>
 
         <div class="card no-print">
-            <h3 style="color:#2ecc71; margin-top:0;">🌡️ ფასადის დათბუნება</h3>
+            <h3 style="color:#27ae60; margin-top:0;">🌡️ ფასადის დათბუნება</h3>
             <div class="grid">
-                <div><label>ფართობი (მ²)</label><input type="number" id="fArea" value="100" oninput="calc()"></div>
-                <div><label>ტიპი</label>
-                    <select id="fType" onchange="updateInsulationOptions(); calc();">
-                        <option value="EPS">EPS (პენოპლასტი)</option>
-                        <option value="XPS">XPS (ექსტრუდირებული)</option>
-                        <option value="ROCK">ქვაბამბა</option>
-                    </select>
+                <div><label>ფართობი (მ²)</label><input type="number" id="fS" value="100" oninput="calc()"></div>
+                <div><label>ფილის ფასი (1მ²)</label><input type="number" id="fBoardP" value="4.10" oninput="calc()">
                 </div>
-                <div><label>სისქე/ფასი</label><select id="fThick" onchange="calc()"></select></div>
-                <div><label>ხელობა (მ²)</label><input type="number" id="fHand" value="25" oninput="calc()"></div>
+                <div><label>ხელობა (1მ²)</label><input type="number" id="fWorkP" value="25" oninput="calc()"></div>
             </div>
-            <div class="res-box" style="border-left-color: #2ecc71;">
-                <div class="mat-row"><span>წებო-ცემენტი (25კგ):</span> <span><span id="fGlueRes">0</span> ტომარა</span>
-                </div>
-                <div class="mat-row"><span>ბადე (50მ რულონი):</span> <span><span id="fMeshRes">0</span> ცალი</span>
-                </div>
-                <div class="mat-row"><span>დუბელი (ზონტიკი):</span> <span><span id="fPlugRes">0</span> ცალი</span></div>
-                <div class="mat-row"><span>დეკორი (25კგ):</span> <span><span id="fDecorRes">0</span> ტომარა</span></div>
+            <div class="res-box" style="border-left-color: #27ae60;">
+                <div class="mat-row"><span>წებო-ცემენტი:</span> <span><span id="f_glue">0</span> კგ</span></div>
+                <div class="mat-row"><span>ბადე:</span> <span><span id="f_mesh">0</span> მ²</span></div>
+                <div class="mat-row"><span>დუბელი:</span> <span><span id="f_plug">0</span> ცალი</span></div>
                 <div class="total-line">
                     <div style="font-size: 13px;">მასალა: <span id="fMatSum">0</span> ₾ | ხელობა: <span
                             id="fWorkSum">0</span> ₾</div>
-                    <button class="add-btn" style="background:#2ecc71"
-                        onclick="add('ფასადი', 'fArea', 'fMatSum', 'fWorkSum', 'მ²')">დამატება</button>
+                    <button class="add-btn" style="background:#27ae60"
+                        onclick="add('ფასადი', 'fS', 'fMatSum', 'fWorkSum', 'მ²')">დამატება</button>
                 </div>
             </div>
         </div>
@@ -363,8 +354,114 @@
     </div>
 
     <script>
-        const insulationData = {
-            'EPS': [{ t: '4 სმ', p: 3.10 }, { t: '5 სმ', p: 4.10 }, { t: '10 სმ', p: 6.20 }],
-            'XPS': [{ t: '3 სმ', p: 6.50 }, { t: '4 სმ', p: 8.75 }, { t: '5 სმ', p: 10.25 }],
-            'ROCK': [{ t: '5 სმ', p: 12.15 }, { t: '7.5 სმ', p: 15.20 }, { t: '10 სმ', p: 20.15 }]
-        };
+        function updateClock() { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }
+        setInterval(updateClock, 1000);
+
+        function updateBlockData() {
+            let bS = document.getElementById('bSize');
+            let sel = bS.options[bS.selectedIndex];
+            document.getElementById('bPrice').value = sel.getAttribute('data-p');
+            document.getElementById('bWork').value = sel.getAttribute('data-w');
+        }
+
+        function updateWDPrice() {
+            let wd = document.getElementById('wdType');
+            let sel = wd.options[wd.selectedIndex];
+            document.getElementById('wdPrice').value = sel.value;
+            document.getElementById('wdLabel').innerText = sel.parentElement.label === "კარები (ცალი)" ? "რაოდენობა (ცალი)" : "რაოდენობა (მ²)";
+        }
+
+        function calc() {
+            // არმატურა
+            let rDia = parseFloat(document.getElementById('rDia').value);
+            let rKG = parseFloat(document.getElementById('rKG_input').value) || 0;
+            let rPT = parseFloat(document.getElementById('rPriceT').value) || 0;
+            document.getElementById('rLen_res').innerText = (rKG / rDia).toFixed(1);
+            document.getElementById('rSum').innerText = Math.round((rKG / 1000) * rPT);
+
+            // ბეტონი
+            let cv = parseFloat(document.getElementById('cV').value) || 0;
+            let cS = document.getElementById('cMark');
+            let sel = cS.options[cS.selectedIndex];
+            let cK = parseFloat(sel.value), sK = parseFloat(sel.getAttribute('data-sand')), gK = parseFloat(sel.getAttribute('data-grav'));
+            document.getElementById('c_cem').innerText = Math.round(cv * cK);
+            document.getElementById('c_sand').innerText = Math.round(cv * sK);
+            document.getElementById('c_grav').innerText = Math.round(cv * gK);
+            let mCP = (cK * 0.32) + (sK * 0.06) + (gK * 0.032);
+            document.getElementById('cMatSum').innerText = Math.round(cv * mCP);
+            document.getElementById('cWorkSum').innerText = Math.round(cv * parseFloat(document.getElementById('cWP').value));
+
+            // ბლოკი (შენი 12.5 ფორმულა)
+            let bs = parseFloat(document.getElementById('bS').value) || 0;
+            let bcExact = bs * 12.5;
+            document.getElementById('bCount').innerText = Math.ceil(bcExact);
+            let bCem = bcExact * 1.2; document.getElementById('bCem').innerText = Math.round(bCem);
+            let bSand = bcExact * 0.003; document.getElementById('bSand').innerText = bSand.toFixed(2);
+            let bWp = parseFloat(document.getElementById('bWork').value) || 0;
+            let bMp = parseFloat(document.getElementById('bPrice').value) || 0;
+            document.getElementById('bMatSum').innerText = Math.round((bcExact * bMp) + (bCem * 0.32) + (bSand * 60));
+            document.getElementById('bWorkSum').innerText = Math.round(bcExact * bWp);
+
+            // ფასადი (დამხმარე მასალებით)
+            let fS = parseFloat(document.getElementById('fS').value) || 0;
+            let fBP = parseFloat(document.getElementById('fBoardP').value) || 0;
+            let fWP = parseFloat(document.getElementById('fWorkP').value) || 0;
+            let fGlue = fS * 8.5; document.getElementById('f_glue').innerText = Math.round(fGlue);
+            let fMesh = fS * 1.1; document.getElementById('f_mesh').innerText = Math.round(fMesh);
+            let fPlug = fS * 6; document.getElementById('f_plug').innerText = Math.round(fPlug);
+            let fMatTotal = (fS * fBP) + (fGlue * 0.7) + (fMesh * 1.7) + (fPlug * 0.15); // დამხმარეების ფასები
+            document.getElementById('fMatSum').innerText = Math.round(fMatTotal);
+            document.getElementById('fWorkSum').innerText = Math.round(fS * fWP);
+
+            // რბილი გადახურვა
+            let rbs = parseFloat(document.getElementById('rbS').value) || 0;
+            let rbmp = parseFloat(document.getElementById('rbMatP').value) || 0;
+            let rbwp = parseFloat(document.getElementById('rbWorkP').value) || 0;
+            document.getElementById('rbMatSum').innerText = Math.round(rbs * rbmp);
+            document.getElementById('rbWorkSum').innerText = Math.round(rbs * rbwp);
+
+            // კარ-ფანჯარა
+            let wdQ = parseFloat(document.getElementById('wdQty').value) || 0;
+            let wdP = parseFloat(document.getElementById('wdPrice').value) || 0;
+            document.getElementById('wdSum').innerText = Math.round(wdQ * wdP);
+        }
+
+        let itemsTotal = 0;
+        function add(name, qtyId, matSumId, workSumId, unit) {
+            let q = document.getElementById(qtyId).value;
+            let mat = parseInt(document.getElementById(matSumId).innerText) || 0;
+            let work = workSumId === '0' ? 0 : (parseInt(document.getElementById(workSumId).innerText) || 0);
+            let rowSum = mat + work;
+            document.getElementById('list').innerHTML += `<tr><td><b>${name}</b></td><td>${q} ${unit}</td><td>${mat} ₾</td><td>${work} ₾</td><td><b>${rowSum} ₾</b></td><td class="no-print" onclick="this.parentElement.remove(); updateTotals();" style="color:red; cursor:pointer;">✕</td></tr>`;
+            updateTotals();
+        }
+
+        function addWD() {
+            let sel = document.getElementById('wdType').options[document.getElementById('wdType').selectedIndex];
+            let name = sel.text;
+            let unit = document.getElementById('wdLabel').innerText.includes("ცალი") ? "ცალი" : "მ²";
+            let qty = document.getElementById('wdQty').value;
+            let total = parseInt(document.getElementById('wdSum').innerText);
+            document.getElementById('list').innerHTML += `<tr><td><b>${name}</b></td><td>${qty} ${unit}</td><td>${total} ₾</td><td>0 ₾</td><td><b>${total} ₾</b></td><td class="no-print" onclick="this.parentElement.remove(); updateTotals();" style="color:red; cursor:pointer;">✕</td></tr>`;
+            updateTotals();
+        }
+
+        function updateTotals() {
+            let rows = document.getElementById('list').rows;
+            let currentTotal = 0;
+            for (let i = 0; i < rows.length; i++) {
+                currentTotal += parseInt(rows[i].cells[4].innerText.replace(' ₾', ''));
+            }
+            itemsTotal = currentTotal;
+            updateGrand();
+        }
+
+        function updateGrand() {
+            let trans = parseInt(document.getElementById('transport').value) || 0;
+            document.getElementById('grand').innerText = itemsTotal + trans;
+        }
+        window.onload = calc;
+    </script>
+</body>
+
+</html>

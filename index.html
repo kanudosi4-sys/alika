@@ -258,25 +258,31 @@
         </div>
 
         <div class="card no-print">
-            <h3 style="color:#2ecc71; margin-top:0;">🌡️ ფასადის დათბუნება + დეკორი</h3>
+            <h3 style="color:#2ecc71; margin-top:0;">🌡️ ფასადის დათბუნება</h3>
             <div class="grid">
                 <div><label>ფართობი (მ²)</label><input type="number" id="fasS" value="100" oninput="calc()"></div>
-                <div><label>მასალა (1მ²)</label><input type="number" id="fasMatP" value="18" oninput="calc()"></div>
-                <div><label>დეკორი (მასალა)</label>
-                    <select id="fasDec" onchange="calc()">
-                        <option value="0">არაფერი</option>
-                        <option value="4.50">მიუნხენი</option>
-                        <option value="7.50">კაუჩუკი</option>
-                        <option value="3.50">ემულსია</option>
+                <div><label>დათბუნების ტიპი</label>
+                    <select id="fasType" onchange="updateFasPrice(); calc();">
+                        <option value="ქაფპლასტი (EPS)" data-p3="12" data-p5="15" data-p10="22">ქაფპლასტი (EPS)</option>
+                        <option value="ექსტრუდირებული (XPS)" data-p3="18" data-p5="24" data-p10="42">ექსტრუდირებული
+                            (XPS)</option>
+                        <option value="ქვაბამბა" data-p3="25" data-p5="35" data-p10="60">ქვაბამბა</option>
                     </select>
                 </div>
+                <div><label>სისქე</label>
+                    <select id="fasThick" onchange="updateFasPrice(); calc();">
+                        <option value="3">3 სმ</option>
+                        <option value="5" selected>5 სმ</option>
+                        <option value="10">10 სმ</option>
+                    </select>
+                </div>
+                <div><label>მასალა (1მ²)</label><input type="number" id="fasMatP" value="15" oninput="calc()"></div>
                 <div><label>ხელობა (1მ²)</label><input type="number" id="fasWorkP" value="25" oninput="calc()"></div>
             </div>
             <div class="res-box" style="border-left-color: #2ecc71;">
                 <div class="mat-row"><span>წებოცემენტი (2 პირი):</span> <span><span id="fasGlue">0</span> კგ</span>
                 </div>
                 <div class="mat-row"><span>ბადე (1.1 კოეფ.):</span> <span><span id="fasMesh">0</span> მ²</span></div>
-                <div class="mat-row"><span>დეკორის ფასი:</span> <span><span id="fasDecRes">0</span> ₾</span></div>
                 <div class="total-line">
                     <div style="font-size: 13px;">მასალა: <span id="fasMatSum">0</span> ₾ | ხელობა: <span
                             id="fasWorkSum">0</span> ₾</div>
@@ -289,3 +295,100 @@
         <div class="card no-print">
             <h3 style="color:#34495e; margin-top:0;">🚪 კარ-ფანჯარა</h3>
             <div class="grid">
+                <div><label>სახეობა</label>
+                    <select id="wdType" onchange="updateWDPrice(); calc();">
+                        <optgroup label="ფანჯრები (მ²)">
+                            <option value="216">მეტალოპლასმასი თეთრი</option>
+                            <option value="245">მეტალოპლასმასი ფერადი</option>
+                            <option value="325">ალუმინი</option>
+                            <option value="375">იზოალუმინი</option>
+                        </optgroup>
+                        <optgroup label="კარები (ცალი)">
+                            <option value="900">ლითონის უბრალო</option>
+                            <option value="1200">ლითონის საშუალო</option>
+                            <option value="1650">ლითონის მაღალი ხარისხის</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div><label id="wdLabel">რაოდენობა (მ²)</label><input type="number" id="wdQty" value="1"
+                        oninput="calc()"></div>
+                <div><label>ფასი (1 ერთეული)</label><input type="number" id="wdPrice" value="216" oninput="calc()">
+                </div>
+            </div>
+            <div class="res-box" style="border-left-color: #34495e;">
+                <div class="mat-row"><span>შენიშვნა:</span> <span>ფასი მოიცავს სრულ მონტაჟს</span></div>
+                <div class="total-line">
+                    <span>ჯამი: <span id="wdSum">0</span> ₾</span>
+                    <button class="add-btn" style="background:#34495e" onclick="addWD()">დამატება</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card no-print">
+            <h3 style="color:#7f8c8d; margin-top:0;">🌑 რბილი გადახურვა (ბიტუმი)</h3>
+            <div class="grid">
+                <div><label>ფართობი (მ²)</label><input type="number" id="rbS" value="100" oninput="calc()"></div>
+                <div><label>მასალის ჯამი (1მ²)</label><input type="number" id="rbMatP" value="16" oninput="calc()">
+                </div>
+                <div><label>შრომა (1მ²)</label><input type="number" id="rbWorkP" value="12" oninput="calc()"></div>
+            </div>
+            <div class="res-box" style="border-left-color: #7f8c8d;">
+                <div class="mat-row"><span>პრაიმერი (1₾) + ქვედა (7₾) + ზედა (8₾)</span></div>
+                <div class="total-line">
+                    <div style="font-size: 13px;">მასალა: <span id="rbMatSum">0</span> ₾ | ხელობა: <span
+                            id="rbWorkSum">0</span> ₾</div>
+                    <button class="add-btn" style="background:#7f8c8d"
+                        onclick="add('რბილი გადახურვა', 'rbS', 'rbMatSum', 'rbWorkSum', 'მ²')">დამატება</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card no-print">
+            <h3 style="color:#27ae60; margin-top:0;">📐 ლესვა</h3>
+            <div class="grid">
+                <div><label>ფართობი (მ²)</label><input type="number" id="pS" value="50" oninput="calc()"></div>
+                <div><label>სისქე (სმ)</label>
+                    <select id="pThick" onchange="calc()">
+                        <option value="2">2 სმ</option>
+                        <option value="2.5" selected>2.5 სმ</option>
+                        <option value="3">3 სმ</option>
+                    </select>
+                </div>
+                <div><label>ხელობა (1მ²)</label><input type="number" id="pWork" value="20" oninput="calc()"></div>
+            </div>
+            <div class="res-box" style="border-left-color: #27ae60;">
+                <div class="mat-row"><span>ცემენტი:</span> <span><span id="pCem">0</span> კგ</span></div>
+                <div class="mat-row"><span>ქვიშა:</span> <span><span id="pSand">0</span> მ³</span></div>
+                <div class="total-line">
+                    <div style="font-size: 13px;">მასალა: <span id="pMatSum">0</span> ₾ | ხელობა: <span
+                            id="pWorkSum">0</span> ₾</div>
+                    <button class="add-btn" style="background:#27ae60"
+                        onclick="add('ლესვა', 'pS', 'pMatSum', 'pWorkSum', 'მ²')">დამატება</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card no-print">
+            <h3 style="color:#c0392b; margin-top:0;">🏠 სახურავი (თუნუქი)</h3>
+            <div class="grid">
+                <div><label>ფართობი (მ²)</label><input type="number" id="rfS" value="100" oninput="calc()"></div>
+                <div><label>ხის ფასი (1მ³)</label><input type="number" id="rfWoodP" value="900" oninput="calc()"></div>
+                <div><label>თუნუქი (1მ²)</label><input type="number" id="rfTinP" value="18.60" oninput="calc()"></div>
+                <div><label>ხელობა (1მ²)</label><input type="number" id="rfWorkP" value="40" oninput="calc()"></div>
+            </div>
+            <div class="res-box" style="border-left-color: #c0392b;">
+                <div class="mat-row"><span>ხის მასალა:</span> <span><span id="rfWoodQty">0</span> მ³</span></div>
+                <div class="total-line">
+                    <div style="font-size: 13px;">მასალა: <span id="rfMatSum">0</span> ₾ | ხელობა: <span
+                            id="rfWorkSum">0</span> ₾</div>
+                    <button class="add-btn" style="background:#c0392b"
+                        onclick="add('თუნუქის სახურავი', 'rfS', 'rfMatSum', 'rfWorkSum', 'მ²')">დამატება</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card no-print">
+            <h3 style="color:#16a085; margin-top:0;">📏 იატაკის მოჭიმვა</h3>
+            <div class="grid">
+                <div><label>ფართობი (მ²)</label><input type="number" id="fS" value="100" oninput="calc()"></div>
+                <div><label>სისქე (სმ)</label><input type="number

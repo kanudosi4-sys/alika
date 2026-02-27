@@ -261,48 +261,31 @@
             <h3 style="color:#2ecc71; margin-top:0;">🌡️ ფასადის დათბუნება + დეკორი</h3>
             <div class="grid">
                 <div><label>ფართობი (მ²)</label><input type="number" id="fasS" value="100" oninput="calc()"></div>
-                <div><label>იზოლაცია</label>
-                    <select id="fasType" onchange="calc()">
-                        <option value="5.50">EPS (პენოპლასტი)</option>
-                        <option value="12.00" selected>XPS (იქს-პი-ესი)</option>
-                        <option value="18.50">ქვაბამბა (ფასადის)</option>
-                    </select>
-                </div>
-                <div><label>სისქე (სმ)</label>
-                    <select id="fasThick" onchange="calc()">
-                        <option value="1">2 სმ</option>
-                        <option value="1.5">3 სმ</option>
-                        <option value="2.3" selected>5 სმ</option>
-                        <option value="4.5">10 სმ</option>
-                    </select>
-                </div>
+                <div><label>მასალა (1მ²)</label><input type="number" id="fasMatP" value="18" oninput="calc()"></div>
                 <div><label>დეკორი (მასალა)</label>
                     <select id="fasDec" onchange="calc()">
-                        <option value="0">არაფერი (მხოლოდ დათბუნება)</option>
-                        <option value="4.50">მიუნხენი (თეთრი)</option>
-                        <option value="7.50">კაუჩუკის ნალესი</option>
-                        <option value="3.50">ემულსია (ფასადის საღებავი)</option>
+                        <option value="0">არაფერი</option>
+                        <option value="4.50">მიუნხენი</option>
+                        <option value="7.50">კაუჩუკი</option>
+                        <option value="3.50">ემულსია</option>
                     </select>
                 </div>
-                <div><label>ხელობა (ჯამური 1მ²)</label><input type="number" id="fasWorkP" value="35" oninput="calc()">
-                </div>
+                <div><label>ხელობა (1მ²)</label><input type="number" id="fasWorkP" value="25" oninput="calc()"></div>
             </div>
             <div class="res-box" style="border-left-color: #2ecc71;">
                 <div class="mat-row"><span>წებოცემენტი (2 პირი):</span> <span><span id="fasGlue">0</span> კგ</span>
                 </div>
-                <div class="mat-row"><span>დეკორის ხარჯი:</span> <span><span id="fasDecRes">0</span> ₾</span></div>
+                <div class="mat-row"><span>ბადე (1.1 კოეფ.):</span> <span><span id="fasMesh">0</span> მ²</span></div>
+                <div class="mat-row"><span>დეკორის ფასი:</span> <span><span id="fasDecRes">0</span> ₾</span></div>
                 <div class="total-line">
                     <div style="font-size: 13px;">მასალა: <span id="fasMatSum">0</span> ₾ | ხელობა: <span
                             id="fasWorkSum">0</span> ₾</div>
                     <button class="add-btn" style="background:#2ecc71"
-                        onclick="add('ფასადი+დეკორი', 'fasS', 'fasMatSum', 'fasWorkSum', 'მ²')">დამატება</button>
+                        onclick="add('ფასადი', 'fasS', 'fasMatSum', 'fasWorkSum', 'მ²')">დამატება</button>
                 </div>
             </div>
         </div>
 
         <div class="card no-print">
-            <h3 style="color:#27ae60; margin-top:0;">📐 ლესვა</h3>
+            <h3 style="color:#34495e; margin-top:0;">🚪 კარ-ფანჯარა</h3>
             <div class="grid">
-                <div><label>ფართობი (მ²)</label><input type="number" id="pS" value="50" oninput="calc()"></div>
-                <div><label>სისქე (სმ)</label>
-                    <select id="pThick"

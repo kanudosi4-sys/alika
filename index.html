@@ -261,25 +261,25 @@
             <h3 style="color:#1abc9c; margin-top:0;">🌡️ ფასადის დათბუნება</h3>
             <div class="grid">
                 <div><label>ფართობი (მ²)</label><input type="number" id="iS" value="100" oninput="calc()"></div>
-                <div><label>დათბუნების ტიპი</label>
-                    <select id="iType" onchange="calc()">
-                        <option value="15">ქაფპლასტი (EPS)</option>
-                        <option value="22">ექსტრუდირებული (XPS)</option>
-                        <option value="28">ქვაბამბა</option>
+                <div><label>ტიპი</label>
+                    <select id="iType" onchange="updateInsulationOptions(); calc();">
+                        <option value="EPS">ქაფპლასტი (EPS)</option>
+                        <option value="XPS">ექსტრუდირებული (XPS)</option>
+                        <option value="STONE">ქვაბამბა</option>
                     </select>
                 </div>
                 <div><label>სისქე</label>
-                    <select id="iThick">
-                        <option value="5">5 სმ</option>
-                        <option value="10">10 სმ</option>
-                    </select>
+                    <select id="iThick" onchange="calc()"></select>
                 </div>
-                <div><label>მასალა (1მ²)</label><input type="number" id="iMatPrice" value="15" oninput="calc()"></div>
+                <div><label>მასალა (1მ²)</label><input type="number" id="iMatPrice" value="3.10" readonly
+                        style="background:#f9f9f9;"></div>
                 <div><label>ხელობა (1მ²)</label><input type="number" id="iWorkPrice" value="25" oninput="calc()"></div>
             </div>
             <div class="res-box" style="border-left-color: #1abc9c;">
-                <div class="mat-row"><span>წებოცემენტი (2 პირი):</span> <span><span id="iGlue">0</span> კგ</span></div>
+                <div class="mat-row"><span>წებოცემენტი (8.5 კგ/მ²):</span> <span><span id="iGlue">0</span> კგ</span>
+                </div>
                 <div class="mat-row"><span>ბადე (1.1 კოეფ.):</span> <span><span id="iNet">0</span> მ²</span></div>
+                <div class="mat-row"><span>დუბელი (6 ც/მ²):</span> <span><span id="iAnchor">0</span> ცალი</span></div>
                 <div class="total-line">
                     <div style="font-size: 13px;">მასალა: <span id="iMatSum">0</span> ₾ | ხელობა: <span
                             id="iWorkSum">0</span> ₾</div>
@@ -429,6 +429,12 @@
     </div>
 
     <script>
+        const insulationPrices = {
+            'EPS': { '4სმ': 3.10, '5სმ': 4.10, '10სმ': 6.20 },
+            'XPS': { '3სმ': 6.50, '4სმ': 8.75, '5სმ': 10.25 },
+            'STONE': { '5სმ': 12.15, '7.5სმ': 15.20, '10სმ': 20.15 }
+        };
+
         function updateClock() { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }
         setInterval(updateClock, 1000);
 
@@ -444,6 +450,18 @@
             let sel = wd.options[wd.selectedIndex];
             document.getElementById('wdPrice').value = sel.value;
             document.getElementById('wdLabel').innerText = sel.parentElement.label === "კარები (ცალი)" ? "რაოდენობა (ცალი)" : "რაოდენობა (მ²)";
+        }
+
+        function updateInsulationOptions() {
+            const type = document.getElementById('iType').value;
+            const thickSelect = document.getElementById('iThick');
+            thickSelect.innerHTML = '';
+            for (let size in insulationPrices[type]) {
+                let opt = document.createElement('option');
+                opt.value = insulationPrices[type][size];
+                opt.innerText = size;
+                thickSelect.appendChild(opt);
+            }
         }
 
         function calc() {
@@ -479,11 +497,16 @@
 
             // ფასადის დათბუნება
             let iS = parseFloat(document.getElementById('iS').value) || 0;
-            let iGlue = iS * 10; document.getElementById('iGlue').innerText = Math.round(iGlue);
-            let iNet = iS * 1.1; document.getElementById('iNet').innerText = iNet.toFixed(1);
-            let iMatP = parseFloat(document.getElementById('iMatPrice').value) || 0;
+            let selectedPrice = parseFloat(document.getElementById('iThick').value) || 0;
+            document.getElementById('iMatPrice').value = selectedPrice;
+            let iGlue = iS * 8.5;
+            let iNet = iS * 1.1;
+            let iAnchor = iS * 6;
+            document.getElementById('iGlue').innerText = Math.round(iGlue);
+            document.getElementById('iNet').innerText = iNet.toFixed(1);
+            document.getElementById('iAnchor').innerText = Math.round(iAnchor);
             let iWorkP = parseFloat(document.getElementById('iWorkPrice').value) || 0;
-            document.getElementById('iMatSum').innerText = Math.round(iS * iMatP);
+            document.getElementById('iMatSum').innerText = Math.round(iS * selectedPrice);
             document.getElementById('iWorkSum').innerText = Math.round(iS * iWorkP);
 
             // რბილი გადახურვა
@@ -506,7 +529,7 @@
             document.getElementById('pMatSum').innerText = Math.round((pCem * 0.32) + (pSand * 60));
             document.getElementById('pWorkSum').innerText = Math.round(ps * parseFloat(document.getElementById('pWork').value));
 
-            // სახურავი (თუნუქი)
+            // სახურავი
             let rfs = parseFloat(document.getElementById('rfS').value) || 0;
             let rfWq = rfs * 0.06;
             document.getElementById('rfWoodQty').innerText = rfWq.toFixed(2);
@@ -561,7 +584,12 @@
             let trans = parseInt(document.getElementById('transport').value) || 0;
             document.getElementById('grand').innerText = itemsTotal + trans;
         }
-        window.onload = calc;
+
+        window.onload = function () {
+            updateInsulationOptions();
+            calc();
+            updateClock();
+        };
     </script>
 </body>
 

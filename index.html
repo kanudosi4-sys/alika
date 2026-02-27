@@ -281,7 +281,7 @@
                 <div class="mat-row"><span>ბადე (1.1 კოეფ.):</span> <span><span id="iNet">0</span> მ²</span></div>
                 <div class="mat-row"><span>დუბელი (6 ც/მ²):</span> <span><span id="iAnchor">0</span> ცალი</span></div>
                 <div class="total-line">
-                    <div style="font-size: 13px;">მასალა: <span id="iMatSum">0</span> ₾ | ხელობა: <span
+                    <div style="font-size: 13px;">მასალა (+დამხმარე): <span id="iMatSum">0</span> ₾ | ხელობა: <span
                             id="iWorkSum">0</span> ₾</div>
                     <button class="add-btn" style="background:#1abc9c"
                         onclick="add('დათბუნება', 'iS', 'iMatSum', 'iWorkSum', 'მ²')">დამატება</button>
@@ -462,6 +462,7 @@
                 opt.innerText = size;
                 thickSelect.appendChild(opt);
             }
+            calc();
         }
 
         function calc() {
@@ -495,18 +496,22 @@
             document.getElementById('bMatSum').innerText = Math.round((bc * bMp) + (bCem * 0.32) + (bSand * 60));
             document.getElementById('bWorkSum').innerText = Math.round(bc * bWp);
 
-            // ფასადის დათბუნება
+            // ფასადის დათბუნება (დამატებული 6 ლარი დამხმარე მასალებისთვის)
             let iS = parseFloat(document.getElementById('iS').value) || 0;
             let selectedPrice = parseFloat(document.getElementById('iThick').value) || 0;
             document.getElementById('iMatPrice').value = selectedPrice;
+
             let iGlue = iS * 8.5;
             let iNet = iS * 1.1;
             let iAnchor = iS * 6;
             document.getElementById('iGlue').innerText = Math.round(iGlue);
             document.getElementById('iNet').innerText = iNet.toFixed(1);
             document.getElementById('iAnchor').innerText = Math.round(iAnchor);
+
+            const additionalMatPrice = 6; // წებოცემენტი + ბადე + დუბელი
             let iWorkP = parseFloat(document.getElementById('iWorkPrice').value) || 0;
-            document.getElementById('iMatSum').innerText = Math.round(iS * selectedPrice);
+
+            document.getElementById('iMatSum').innerText = Math.round(iS * (selectedPrice + additionalMatPrice));
             document.getElementById('iWorkSum').innerText = Math.round(iS * iWorkP);
 
             // რბილი გადახურვა
